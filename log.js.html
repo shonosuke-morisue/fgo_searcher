@@ -1,0 +1,43 @@
+<script>
+/*///////////////////////////////////////////////////////
+
+　初期化処理
+
+*////////////////////////////////////////////////////////
+
+var logList = new Array();
+
+// スプレッドシートからデータ取得
+window.onload = function() {
+  google.script.run
+  .withSuccessHandler(setLogList)
+  .withFailureHandler(hendolerError)
+  .getData('更新履歴');
+}
+
+//更新履歴の取得
+function setLogList(myData){
+  logList = JSON.parse(myData);  //スプレッドシートから取得したデータ
+  
+  console.log(logList);
+  setLogList(logList);
+}
+
+// データ取得エラー
+function hendolerError() {
+  alert("データを正常に取得できませんでした。リロードしてみてください。");
+}
+
+
+/*///////////////////////////////////////////////////////
+
+　更新履歴の処理
+
+*////////////////////////////////////////////////////////
+
+function setLogList(logList){
+// 更新履歴描画処理
+}
+
+
+</script>

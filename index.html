@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108074797-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-108074797-1');
+    </script>
+    
+    <base target="_top">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <?!= include('main.js'); ?>
+    <?!= include('main.css'); ?>
+  </head>
+  <body>
+  <div id="wrapper">
+<!--タイトルロゴ、読み込みが遅いので一時的に外す 
+   <img src="https://kazemai.github.io/fgo-vz/common/images/pc_logo.png">
+-->
+   <a href="https://script.google.com/macros/s/AKfycbxwWrzs0cEPLtfVjMOMI-1IgeZYefMfnxylmOwZpyQ/exec"><img src="https://drive.google.com/uc?export=view&id=0B_VdmOol25-laWdIVFM4QlE1MFU"></a><br>
+   <a href="https://twitter.com/share" class="twitter-share-button" data-url="https://goo.gl/7M3D1B" data-text="概念礼装検索サービス「FGOサーチャー」" data-via="fgo_searcher" data-hashtags="FateGO,FGO" data-dnt="true">Tweet</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
+　　<hr>
+   FGOサーチャー(試験運用中) <a href="https://script.google.com/macros/s/AKfycbxwWrzs0cEPLtfVjMOMI-1IgeZYefMfnxylmOwZpyQ/exec?p=log">ver.<span id="version"></span></a><br>
+   検索したい能力にチェックを入れると、下のほうに条件に合致する礼装の情報が表示されます。<br>
+   
+   <!-- バージョン表示 -->
+   <script>
+     google.script.run
+　　  .withSuccessHandler(setLogList)
+　　  .withFailureHandler(hendolerError)
+　　  .getData('更新履歴');
+   </script>
+   
+   <hr>
+   
+    <div class="headline00">検索条件設定</div>
+    <form id="formSearchType">
+      <p>
+      <!--検索タイプ-->
+      <input class="radio" type="radio" id="and" value="and" name="searchType" checked="checked"><label for="and">and</label>
+      <input class="radio" type="radio" id="or" value="or" name="searchType"><label for="or">or</label>
+      <!--リセットボタン-->
+      　/　<button type="button" class="button" align="center" onClick="chBxOff();">リセット</button>
+      </p>
+    </form>
+
+
+<!--    <form id="formSearchWord"> -->
+    <form id="formSearchWord" style="display:none">
+      <div class="headline01" onclick="obj=document.getElementById('word').style; obj.display=(obj.display=='none')?'block':'none';">文字列検索<br></div>
+      <div id="word" class="contents_text" style="display:none;clear:both;">
+      <!--文字列検索-->
+      <input class="textBox" type="text" id="searchWord" name="searchWord">
+      </div>
+    </form>
+    
+    
+    <form id="formSortType">
+      <div class="headline01" onclick="obj=document.getElementById('sort').style; obj.display=(obj.display=='none')?'block':'none';">ソート順設定<br></div>
+      <div id="sort" class="contents_text" style="display:none;clear:both;">
+      <!--降順昇順-->
+      <input class="checkbox" type="checkbox" id="orderType" value="orderType"><label for="orderType">降順/昇順</label><br>
+      <input class="radio" type="radio" id="sortNo" value="sortNo" name="sortType" checked="checked"><label for="sortNo">番号</label>
+      <input class="radio" type="radio" id="sortHp" value="sortHp" name="sortType"><label for="sortHp">HP</label>
+      <input class="radio" type="radio" id="sortAtk" value="sortHp" name="sortType"><label for="sortAtk">ATK</label>
+      </div>
+    </form>
+
+
+    <form id="formAbilityType">
+      <div class="headline01" onclick="obj=document.getElementById('attack').style; obj.display=(obj.display=='none')?'block':'none';">攻撃系<br></div>
+      <div id="attack" class="contents_text" style="display:none;clear:both;">      
+      <span class ="abilityType"><input class="checkbox" type="checkbox" id="attackUp" value="attackUp"><label for="attackUp">攻撃力</label></span>
+      <span class ="abilityType"><input class="checkbox" type="checkbox" id="npDamageUp" value="npDamageUp"><label for="npDamageUp">宝具威力</label></span>
+      <span class ="abilityType"><input class="checkbox" type="checkbox" id="damageUp" value="damageUp"><label for="damageUp">ダメージプラス</label></span>
+      <span class ="abilityType"><input class="checkbox" type="checkbox" id="specialAttackUp" value="specialAttackUp"><label for="specialAttackUp">特攻状態を付与</label></span>
+      <span class ="abilityType"><input class="checkbox" type="checkbox" id="busterUp" value="busterUp"><label for="busterUp">バスター</label></span>
+      <span class ="abilityType"><input class="checkbox" type="checkbox" id="quickUp" value="quickUp"><label for="quickUp">クイック</label></span>
+      <span class ="abilityType"><input class="checkbox" type="checkbox" id="artsUp" value="artsUp"><label for="artsUp">アーツ</label></span>
+      <span class ="abilityType"><input class="checkbox" type="checkbox" id="criticalDamageUp" value="criticalDamageUp"><label for="criticalDamageUp">クリティカル威力アップ</label></span>
+      <span class ="abilityType"><input class="checkbox" type="checkbox" id="starGenerationUp" value="starGenerationUp"><label for="starGenerationUp">スター発生率</label></span>
+      <span class ="abilityType"><input class="checkbox" type="checkbox" id="starGatherUp" value="starGatherUp"><label for="starGatherUp">スター集中</label></span>
+      <span class ="abilityType"><input class="checkbox" type="checkbox" id="getStar" value="getStar"><label for="getStar">毎ターンスター獲得</label></span>
+      <span class ="abilityType"><input class="checkbox" type="checkbox" id="invincibleIgnore" value="invincibleIgnore"><label for="invincibleIgnore">必中・無敵貫通</label></span>
+      <span class ="abilityType"><input class="checkbox" type="checkbox" id="setDebuff" value="setDebuff"><label for="setDebuff">弱体付与</label></span>
+      <br>
+      </div>
+      
+      <div class="headline01" onclick="obj=document.getElementById('defence').style; obj.display=(obj.display=='none')?'block':'none';">防御系<br></div>
+      <div id="defence" class="contents_text" style="display:none;clear:both;">
+      <span class ="abilityType"><input class="checkbox" type="checkbox" id="defenseUp" value="defenseUp"><label for="defenseUp">防御力</label></span>
+      <span class ="abilityType"><input class="checkbox" type="checkbox" id="damageCut" value="damageCut"><label for="damageCut">ダメージカット</label></span>
+      <span class ="abilityType"><input class="checkbox" type="checkbox" id="specialDefenseUp" value="specialDefenseUp"><label for="specialDefenseUp">特防状態を付与</label></span>
+      <span class ="abilityType"><input class="checkbox" type="checkbox" id="setGuts" value="setGuts"><label for="setGuts">ガッツ状態を付与</label></span>
+      <span class ="abilityType"><input class="checkbox" type="checkbox" id="invincible" value="invincible"><label for="invincible">回避・無敵</label></span>
+      <span class ="abilityType"><input class="checkbox" type="checkbox" id="resistDebuff" value="resistDebuff"><label for="resistDebuff">弱体耐性</label></span>
+      <span class ="abilityType"><input class="checkbox" type="checkbox" id="DebuffIgnore" value="DebuffIgnore"><label for="DebuffIgnore">弱体無効</label></span>
+      <br>
+      </div>
+      
+      <div class="headline01" onclick="obj=document.getElementById('hp').style; obj.display=(obj.display=='none')?'block':'none';">HP系<br></div>
+      <div id="hp" class="contents_text" style="display:none;clear:both;">      
+      <span class ="abilityType"><input class="checkbox" type="checkbox" id="hpRegeneration" value="hpRegeneration"><label for="hpRegeneration">HP毎ターン回復</label></span>
+      <span class ="abilityType"><input class="checkbox" type="checkbox" id="healUp" value="healUp"><label for="healUp">HP回復量</label></span>
+      <span class ="abilityType"><input class="checkbox" type="checkbox" id="maxHpUp" value="maxHpUp"><label for="maxHpUp">HP最大値上昇</label></span>
+      <br>
+      </div>
+      
+      <div class="headline01" onclick="obj=document.getElementById('np').style; obj.display=(obj.display=='none')?'block':'none';">NP系<br></div>
+      <div id="np" class="contents_text" style="display:none;clear:both;">
+      <span class ="abilityType"><input class="checkbox" type="checkbox" id="getNpCharge" value="getNpCharge"><label for="getNpCharge">初期NPチャージ</label></span>
+      <span class ="abilityType"><input class="checkbox" type="checkbox" id="getNpUp" value="getNpUp"><label for="getNpUp">NP獲得量</label></span>
+      <span class ="abilityType"><input class="checkbox" type="checkbox" id="npRegeneration" value="npRegeneration"><label for="npRegeneration">NP毎ターン獲得</label></span>
+      <br>
+      </div>
+      
+      <div class="headline01" onclick="obj=document.getElementById('etc').style; obj.display=(obj.display=='none')?'block':'none';">その他<br></div>
+      <div id="etc" class="contents_text" style="display:none;clear:both;">
+      <span class ="abilityType"><input class="checkbox" type="checkbox" id="targetGatherUp" value="targetGatherUp"><label for="targetGatherUp">ターゲット集中状態を付与</label></span>
+      <span class ="abilityType"><input class="checkbox" type="checkbox" id="npChargeCountUp" value="npChargeCountUp"><label for="npChargeCountUp">宝具チャージ段階上昇</label></span>
+      <span class ="abilityType"><input class="checkbox" type="checkbox" id="exit" value="exit"><label for="exit">退場時</label></span>
+      <span class ="abilityType"><input class="checkbox" type="checkbox" id="rewardUp" value="rewardUp"><label for="rewardUp">報酬増加系</label></span>
+      </div>
+      <p>
+      <!-- デバッグの必要に応じて使用
+      <input type="button" value="送信する" onClick="chBxCheck();">
+      -->
+      </p>
+    </form>
+    
+  <hr>
+  <div class="headline00">選択中の能力</div>
+  <div id="container" class="container" style="margin: 0 auto"><div class="contents_text">選択されている能力がありません。</div></div>
+
+  <hr>
+  <div class="headline00">該当概念礼装</div>
+  <div id="container02" class="container" style="margin: 0 auto"><div class="contents_text">該当する概念礼装がありません。</div></div>
+
+
+<!--概念礼装表示のサンプル
+  <div class="cp">
+    <div class="cpParam">
+      <div class="cpIcon"><img src="https://drive.google.com/uc?export=view&id=0B_VdmOol25-lUzNtQ1pJckduVUE"></div>
+      <div class="status"><span class="cpNo">No.1</span> <span class="cpName">頑強</span><br>★☆☆☆☆　COST：1<br>HP：100(300)　ATK：0(0)</div>
+    </div>
+    <div class="abilityMin">自身の防御力を3%アップする</div>
+    <div class="abilityMax">自身の防御力を5%アップする</div>
+    <div class="other">備考：特になし</div>
+  </div>
+-->
+  <footer>
+    <hr>
+    当サイトは個人が運営しており「Fate/Grand Order」の開発・運営等とは一切関係ありません。当サイトを使用したことによる何らかの損害が生じても、一切責任は負いかねます。<br>
+    ↓連絡はこちらから<br>
+    <a href="https://twitter.com/fgo_searcher" class="twitter-follow-button" data-show-count="false">Follow @fgo_searcher</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+  </footer>
+  
+  </div>
+  </body>
+</html>
+
+

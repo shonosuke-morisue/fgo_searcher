@@ -1,0 +1,370 @@
+<script>
+/*///////////////////////////////////////////////////////
+
+　初期化処理
+
+*////////////////////////////////////////////////////////
+
+// 概念礼装リスト、アビリティリストの定義
+var abilityTypeList = new Array();
+var cpList = new Array();
+var cpIconIds = new Array();
+var logList = new Array();
+
+var checkListLast =  new Array();
+var searchWordLast = "";
+var searchTypeLast;
+
+
+// スプレッドシートからデータ取得
+window.onload = function() {  
+  google.script.run
+  .withSuccessHandler(setAbilityTypeList)
+  .withFailureHandler(hendolerError)
+  .getData('効果カテゴリー');
+  
+  google.script.run
+  .withSuccessHandler(setCpList)
+  .withFailureHandler(hendolerError)
+  .getData('概念礼装リスト');
+  
+  google.script.run
+  .withSuccessHandler(setCpIconIds)
+  .withFailureHandler(hendolerError)
+  .getData('概念礼装アイコンID');
+  
+}
+
+//アビリティリストの取得
+function setAbilityTypeList(myData){
+  abilityTypeList = JSON.parse(myData);  //スプレッドシートから取得したデータ
+}
+
+//概念礼装リストの取得
+function setCpList(myData){
+  cpList = JSON.parse(myData);  //スプレッドシートから取得したデータ
+  cpList.shift();
+}
+
+//アイコンIDリストの取得
+function setCpIconIds(myData){
+  cpIconIds = JSON.parse(myData);  //スプレッドシートから取得したデータ
+}
+
+//更新履歴の取得
+function setLogList(myData){
+  logList = JSON.parse(myData);  //スプレッドシートから取得したデータ
+  
+  document.getElementById("version").innerHTML = logList[(logList.length - 1)][1];
+}
+
+// データ取得エラー
+function hendolerError() {
+  alert("データを正常に取得できませんでした。リロードしてみてください。");
+}
+
+/*///////////////////////////////////////////////////////
+
+　チェックボックス関連処理
+  選択能力タグ表示処理
+
+*////////////////////////////////////////////////////////
+
+// 全てのチェックボックのチェックを外す and 概念礼装もリセット
+function chBxOff(){
+  for(i=0; i<abilityTypeList.length; i++) {
+    document.getElementById("formAbilityType").elements[abilityTypeList[i][2]].checked = false;
+    document.getElementById("container02").innerHTML = "<div class='contents_text'>該当する概念礼装がありません。</div>";
+    console.log("カウント：" + [i]);
+  }
+    console.log("チェックボックス外しオワタ");
+}
+
+// 選択しているチェックボックスの一覧表示
+function showChBx(checkList) {
+    var msg = createTag(checkList);
+      document.getElementById("container").innerHTML = msg;
+}
+
+// タグを生成
+function createTag(checkList){
+    var msg = "";
+    var checkList = checkList;
+    
+    console.log("checkList:"+ checkList);
+    
+      for(var i=0; i<checkList.length;i++){
+        for(var ii=0; ii<abilityTypeList.length;ii++){    
+          if(abilityTypeList[ii][2] == checkList[i]){
+            msg = msg + "<span class='choiceAbilityType'>" + abilityTypeList[ii][1] + "</span>";
+            break;
+          }
+        }
+      }
+      if(msg == ""){
+       msg = "<div class='contents_text'>選択されている能力がありません。</div>"
+      }
+      return msg;
+}
+
+// 選択しているチェックボックスを取得
+function convertChbx(){
+    var flag = false;
+    var checkList = new Array();
+    for(var i=0; i<document.getElementById("formAbilityType").elements.length;i++){
+        if(document.getElementById("formAbilityType").elements[i].checked){
+	    flag = true;
+          checkList.push(document.getElementById("formAbilityType").elements[i].value);
+        }
+    }
+    
+    return checkList;
+}
+
+// 検索文字列の取得
+function getSearchWord(){
+  var searchWord = document.getElementById("searchWord").value;
+  return searchWord;
+}
+
+// 検索タイプの取得
+function getSearchType(){
+  var searchType = document.getElementById("and").checked;
+  return searchType;
+}
+
+/*///////////////////////////////////////////////////////
+
+　概念礼装情報表示処理
+
+*////////////////////////////////////////////////////////
+
+// 該当する概念礼装の一覧表示（or検索）
+function chBxCheckOr(checkList,searchWord){
+    var checkList = checkList;
+    
+    if(!checkList){
+        alert("項目が選択されていません。");
+    }
+    
+    // 数値に変換
+    for(var i=0; i<checkList.length;i++){
+      for(var ii=0; ii<abilityTypeList.length;ii++){    
+        if(abilityTypeList[ii][2] == checkList[i]){
+          checkList[i] = abilityTypeList[ii][0];
+          break;
+        }
+      }
+    }
+    
+    // 該当する概念礼装の情報を整形してmsgに入れる
+    var msg = "";
+    for(var i=0; i<cpList.length;i++){
+      for(var ii=0; ii<checkList.length;ii++){
+        
+        if(cpList[i][checkList[ii] + 10] == "○"){
+          msg = createMsg(msg,cpList,i);
+          break;
+        }
+      }
+    }
+    setMsg(msg);
+}
+
+
+
+// 該当する概念礼装の一覧表示（and検索）
+function chBxCheckAnd(checkList,searchWord){
+    var checkList = checkList;
+    
+    if(!checkList){
+        alert("項目が選択されていません。");
+    }
+    
+    // 数値に変換
+    for(var i=0; i<checkList.length;i++){
+      for(var ii=0; ii<abilityTypeList.length;ii++){    
+        if(abilityTypeList[ii][2] == checkList[i]){
+          checkList[i] = abilityTypeList[ii][0];
+          break;
+        }
+      }
+    }
+    
+    sort(cpList);
+    // 該当する概念礼装の情報を整形してmsgに入れる
+    var msg = "";
+    for(var i=0; i<cpList.length;i++){
+      var orCheck = false;
+      
+      // 能力検索
+      for(var ii=0; ii<checkList.length;ii++){
+        if(cpList[i][checkList[ii] + 10] == "○"){
+          orCheck = true;
+        }else{
+          orCheck = false;
+          break;
+        }
+      }
+      if(orCheck){
+        msg = createMsg(msg,cpList,i);
+      }
+    }
+        
+    setMsg(msg);
+}
+// ソート処理
+function sort(cpList){
+ 
+// console.log("---------------------------");
+// console.log("cpList00:" + cpList[0]);
+// cpList.sort(function(a,b){
+// console.log("a[0]:" + a[0]);
+// console.log("b[0]:" + b[0]);
+ 
+//    if(a[0] < b[0]) return 1;
+//    if(a[0] > a[0]) return -1;
+//    return 0;
+// });
+ 
+ console.log("cpList00:" + cpList[0]);
+ console.log("cpList01:" + cpList[1]);
+}
+
+// 文字列検索処理
+function wordSearch(searchWord,cpId){
+
+  var wordCheck = true;
+  if(!(searchWord == "")){
+  
+  console.log("----------------------------------------");
+  console.log("言語検索処理はじめたよ");
+  
+    for(var i = 0; i< 11; i++ ){
+  
+  console.log("----------------------------------------");
+  console.log("cpList["+ cpId +"]: " + cpList[cpId] );
+  console.log("wordCheck: " + wordCheck);
+  console.log("searchWord: " + searchWord);
+  console.log("result[" + i + "]: " + (cpList[cpId][i] + "").search(searchWord));
+  　　
+      if( 0 <= (cpList[cpId][i] + "").search(searchWord) ){
+        wordCheck = true;
+        break;
+      }  
+    }
+  return wordCheck;
+  }
+}
+
+
+// 表示する概念礼装の情報を生成
+function createMsg(msg,cpList,cpId){
+  var no = cpList[cpId][0]; // 番号
+  var rarity = cpList[cpId][1]; // レアリティ
+  var cost = cpList[cpId][2]; // コスト
+  var name = cpList[cpId][3]; // 名称
+  var hpMin = cpList[cpId][4]; // HP（レベル1）
+  var hpMax = cpList[cpId][5]; // HP（最大値）
+  var atkMin = cpList[cpId][6]; // ATK（レベル1）
+  var atkMax = cpList[cpId][7]; // ATK（最大値）
+  var abilityMin = cpList[cpId][8]; // 効果
+  var abilityMax = cpList[cpId][9]; // 効果（最大開放）
+  var other = cpList[cpId][10]; // 備考
+  var abilityTag = ""; // 能力タグ
+  var iconId = cpIconIds[0][2]; // アイコンのファイルid
+   
+  // 能力タグの生成
+  for(var i=0; i<abilityTypeList.length;i++){    
+    for(var col=11; col<cpList[cpId].length;col++){
+      if(abilityTypeList[i][0] == col-10 && cpList[cpId][col] == "○"){
+        abilityTag = abilityTag + "<span class='choiceAbilityType'>" + abilityTypeList[i][1] + "</span>";
+        break;
+      }
+    }
+  }
+  
+  // アイコンのファイルidの取得
+  for (var i = 1 ; i < cpIconIds.length+1 ; i++){
+    if(cpIconIds[i-1][0] == cpId){
+      iconId = cpIconIds[i][2];
+      break;
+    }
+  }
+
+  //レアリティは星に変換
+  var count = "";
+  for(var i=0; i<5 ; i++ ){
+    if(i<rarity){
+      count = count + "★";
+    }else{
+      count = count + "☆";
+    }
+  }
+  rarity = count;
+  
+  // 備考が無い時には入れない
+  if(other){  
+    msg = msg + "<div class='cp'><div class='cpParam'><div class='cpIcon'><img src='https://drive.google.com/uc?export=view&id=" + iconId + "'></div><div class='status'><span class='cpNo'>No."   + no + "</span> <span class='cpName'>"   + name + "</span><br><span id='rarity'>"   + rarity + "</span>　COST："   + cost + "<br>HP："    + hpMin + "("    + hpMax + ")　ATK："    + atkMin + "("    + atkMax + ")</div></div><div style='width:100%'>" + abilityTag + "</div><div class='abilityMin'>"    + abilityMin + "</div><div class='abilityMax'>"    + abilityMax + "</div><div class='other'>"    + other + "</div></div>"; 
+  }else{
+    msg = msg + "<div class='cp'><div class='cpParam'><div class='cpIcon'><img src='https://drive.google.com/uc?export=view&id=" + iconId + "'></div><div class='status'><span class='cpNo'>No."   + no + "</span> <span class='cpName'>"   + name + "</span><br><span id='rarity'>"   + rarity + "</span>　COST："   + cost + "<br>HP："    + hpMin + "("    + hpMax + ")　ATK："    + atkMin + "("    + atkMax + ")</div></div><div style='width:100%'>" + abilityTag + "</div><div class='abilityMin'>"    + abilityMin + "</div><div class='abilityMax'>"    + abilityMax + "</div></div>"; 
+  }
+  return msg;
+}
+
+
+// 検索結果をメッセージとして挿入
+function setMsg(msg){
+    if(msg == ""){
+     msg = "<div class='contents_text'>該当する概念礼装がありません。</div>"
+    }
+    document.getElementById("container02").innerHTML = msg;
+}
+
+//描画更新処理
+function update(){
+  // 最終更新とチェックリストを比較して変化してるかチェック
+  var checkList = convertChbx();
+  var searchWord = getSearchWord();
+  var searchType = getSearchType();
+
+  var checkuUpdateChbx = false;
+  checkuUpdateChbx = !(checkList.toString() == checkListLast.toString());
+  
+  var checkuUpdateWord = false;
+  checkuUpdateWord = !(searchWord == searchWordLast);
+  
+  var checkuSearchType = false;
+  checkuSearchType = !(searchType == searchTypeLast);
+
+  if(checkuUpdateChbx || checkuUpdateWord || checkuSearchType){
+  
+    // チェックリストの状態を保存（最終入力との比較用）
+    checkListLast = [];
+    for (var i = 0, len = checkList.length; i < len; i++) {
+      checkListLast.push(checkList[i]);
+    }
+    
+    // 入力された文字列を保存（最終入力との比較用）
+    searchWordLast = searchWord;
+    
+    // 検索タイプを保存（最終入力との比較用）
+    searchTypeLast = searchType;
+    
+    // 選択している能力の描画更新
+    showChBx(checkList);
+    
+    // 能力から概念礼装を検索して描画する処理
+    if(document.getElementById("and").checked){
+      chBxCheckAnd(checkList,searchWord);
+    }else{
+      chBxCheckOr(checkList,searchWord);
+    }
+    console.log("更新したよ");
+  }
+  
+}
+
+setInterval('update()',1000);
+
+</script>
