@@ -64,10 +64,12 @@
       <div class="headline01" onclick="obj=document.getElementById('sort').style; obj.display=(obj.display=='none')?'block':'none';">ソート順設定<br></div>
       <div id="sort" class="contents_text" style="display:none;clear:both;">
       <!--降順昇順-->
-      <input class="checkbox" type="checkbox" id="orderType" value="orderType"><label for="orderType">降順/昇順</label><br>
-      <input class="radio" type="radio" id="sortNo" value="sortNo" name="sortType" checked="checked"><label for="sortNo">番号</label>
-      <input class="radio" type="radio" id="sortHp" value="sortHp" name="sortType"><label for="sortHp">HP</label>
-      <input class="radio" type="radio" id="sortAtk" value="sortHp" name="sortType"><label for="sortAtk">ATK</label>
+      <input class="checkbox" type="checkbox" id="orderType" value="orderType"><label for="orderType">昇順/降順</label><br>
+      <hr>
+      <input class="radio" type="radio" id="sortNo" value="sortNo" name="sortType" checked="checked"><label for="sortNo">番号順</label>
+      <input class="radio" type="radio" id="sortRarity" value="sortRarity" name="sortType"><label for="sortRarity">レア度順</label>
+      <input class="radio" type="radio" id="sortHp" value="sortHp" name="sortType"><label for="sortHp">HP順</label>
+      <input class="radio" type="radio" id="sortAtk" value="sortHp" name="sortType"><label for="sortAtk">ATK順</label>
       </div>
     </form>
 
@@ -79,9 +81,9 @@
       <span class ="abilityType"><input class="checkbox" type="checkbox" id="npDamageUp" value="npDamageUp"><label for="npDamageUp">宝具威力</label></span>
       <span class ="abilityType"><input class="checkbox" type="checkbox" id="damageUp" value="damageUp"><label for="damageUp">ダメージプラス</label></span>
       <span class ="abilityType"><input class="checkbox" type="checkbox" id="specialAttackUp" value="specialAttackUp"><label for="specialAttackUp">特攻状態を付与</label></span>
-      <span class ="abilityType"><input class="checkbox" type="checkbox" id="busterUp" value="busterUp"><label for="busterUp">バスター</label></span>
-      <span class ="abilityType"><input class="checkbox" type="checkbox" id="quickUp" value="quickUp"><label for="quickUp">クイック</label></span>
-      <span class ="abilityType"><input class="checkbox" type="checkbox" id="artsUp" value="artsUp"><label for="artsUp">アーツ</label></span>
+      <span class ="abilityType"><input class="checkbox" type="checkbox" id="busterUp" value="busterUp"><label for="busterUp">Buster</label></span>
+      <span class ="abilityType"><input class="checkbox" type="checkbox" id="quickUp" value="quickUp"><label for="quickUp">Quick</label></span>
+      <span class ="abilityType"><input class="checkbox" type="checkbox" id="artsUp" value="artsUp"><label for="artsUp">Arts</label></span>
       <span class ="abilityType"><input class="checkbox" type="checkbox" id="criticalDamageUp" value="criticalDamageUp"><label for="criticalDamageUp">クリティカル威力アップ</label></span>
       <span class ="abilityType"><input class="checkbox" type="checkbox" id="starGenerationUp" value="starGenerationUp"><label for="starGenerationUp">スター発生率</label></span>
       <span class ="abilityType"><input class="checkbox" type="checkbox" id="starGatherUp" value="starGatherUp"><label for="starGatherUp">スター集中</label></span>
@@ -124,7 +126,7 @@
       <span class ="abilityType"><input class="checkbox" type="checkbox" id="targetGatherUp" value="targetGatherUp"><label for="targetGatherUp">ターゲット集中状態を付与</label></span>
       <span class ="abilityType"><input class="checkbox" type="checkbox" id="npChargeCountUp" value="npChargeCountUp"><label for="npChargeCountUp">宝具チャージ段階上昇</label></span>
       <span class ="abilityType"><input class="checkbox" type="checkbox" id="exit" value="exit"><label for="exit">退場時</label></span>
-      <span class ="abilityType"><input class="checkbox" type="checkbox" id="rewardUp" value="rewardUp"><label for="rewardUp">報酬増加系</label></span>
+      <span class ="abilityType"><input class="checkbox" type="checkbox" id="rewardUp" value="rewardUp"><label for="rewardUp">報酬増加</label></span>
       </div>
       <p>
       <!-- デバッグの必要に応じて使用
