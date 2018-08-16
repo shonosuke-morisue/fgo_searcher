@@ -28,6 +28,13 @@ var searchWordLast = "";
 var searchTypeLast;
 var sortTypeLast = [];
 
+for (let i = 0; i < cpList.length; i++) {
+  cpList[i][0] = cpList[i][0] - 0;
+  cpList[i][1] = cpList[i][1] - 0;
+  cpList[i][5] = cpList[i][5] - 0;
+  cpList[i][7] = cpList[i][7] - 0;
+}
+
 
 //更新履歴の取得
 function setLogList(myData){
@@ -103,7 +110,8 @@ function convertChbx(){
 
 // 検索文字列の取得
 function getSearchWord(){
-  var searchWord = document.getElementById("searchWord").value;
+  let searchWord = "";
+  searchWord = document.getElementById("searchWord").value;
   return searchWord;
 }
 
@@ -232,7 +240,6 @@ function chBxCheckAnd(checkList,searchWord,sortType){
 
       if(orCheck){
         msg = createMsg(msg,cpList,i);
-
         choiceList = setChoiceList(cpList,choiceList,msg,i);
       }
     }
@@ -325,7 +332,7 @@ function createMsg(msg,cpList,cpId){
   var abilityMax = cpList[cpId][9]; // 効果（最大開放）
   var other = cpList[cpId][10]; // 備考
   var abilityTag = ""; // 能力タグ
-  var fileName = Number(no); // アイコンのファイル名
+  var fileName = no; // アイコンのファイル名
   
   if (fileName < 10) {
     fileName = "icon_000" + fileName + ".png";

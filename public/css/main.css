@@ -5,13 +5,7 @@
 
 ////////////////////////////////////////////////////////////// */
 
-
-/* google apps script のほうで設定されているマージンをリセット */  
-#body {
-  margin: 0 auto;
-}
-
-/* 選択中の能力 */  
+/* 端末によってい表示切り替え */  
 /* ▼表示領域が600px以上の場合 */
 @media screen and (min-width: 601px) {
   div#wrapper{
@@ -103,8 +97,8 @@ div.status{
 }
 
 div.abilityMin{
-  border-radius: 10px;        /* CSS3草案 */  
-  -webkit-border-radius: 10px;    /* Safari,Google Chrome用 */  
+  border-radius: 10px;        /* CSS3草案 */
+  -webkit-border-radius: 10px;    /* Safari,Google Chrome用 */
   -moz-border-radius: 10px;   /* Firefox用 */
   margin: 2px;
   padding: 10px;
@@ -112,8 +106,8 @@ div.abilityMin{
 }
 
 div.abilityMax{
-  border-radius: 10px;        /* CSS3草案 */  
-  -webkit-border-radius: 10px;    /* Safari,Google Chrome用 */  
+  border-radius: 10px;        /* CSS3草案 */
+  -webkit-border-radius: 10px;    /* Safari,Google Chrome用 */
   -moz-border-radius: 10px;   /* Firefox用 */
   margin: 2px;
   padding: 10px;
@@ -121,8 +115,8 @@ div.abilityMax{
 }
 
 div.other{
-  border-radius: 10px;        /* CSS3草案 */  
-  -webkit-border-radius: 10px;    /* Safari,Google Chrome用 */  
+  border-radius: 10px;        /* CSS3草案 */
+  -webkit-border-radius: 10px;    /* Safari,Google Chrome用 */
   -moz-border-radius: 10px;   /* Firefox用 */
   margin: 2px;
   padding: 10px;
@@ -153,7 +147,14 @@ footer {
   font-size: 12px;
   font-style: oblique;
   font-weight: lighter;
-  text-align: center;  
+  text-align: center;
 }
 
+/* アナウンス　赤で強調 */
+.announce{
+  color: red;
+  font-size: 14px;
+  font-style: bold;
+  font-family: 'Sawarabi Mincho', sans-serif;
+}
 

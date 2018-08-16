@@ -31,6 +31,7 @@
     <!-- favicon.icoはルートディレクトに配置 -->
 
     <link rel="stylesheet" href="css/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Sawarabi+Mincho" rel="stylesheet">
     
     <!-- update the version number as needed -->
     <script defer src="/__/firebase/5.3.1/firebase-app.js"></script>
@@ -42,16 +43,18 @@
     
     <script defer src="/js/csv2db.js"></script>
     <script defer src="/js/main.js"></script>
+
   </head>
   <body>
   <div id="wrapper">
   <!--タイトルロゴ-->
-   <a href="/index.html"><img src="./images/fgo_logo.png"></a><br>
+   <a href="/"><img src="./images/fgo_logo.png"></a><br>
    <a href="https://twitter.com/share" class="twitter-share-button" data-url="https://morisue-lab.firebaseapp.com/" data-text="概念礼装検索サービス「FGOサーチャー」" data-via="fgo_searcher" data-hashtags="FateGO,FGO" data-dnt="true">Tweet</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
 
 　　<hr>
    <!-- FGOサーチャー(試験運用中) <a href="/log.html">ver.<span id="version"></span></a><br> -->
    FGOの概念礼装検索サービスです。<br>検索したい能力や条件にチェックを入れると、下のほうに条件に合致する礼装の情報が表示されます。<br>
+   <p class="announce">※現在701番の礼装までしか対応していません。702番以降は順次追加しますので少々お待ちください。</p>
    
    <hr>
    
@@ -62,7 +65,7 @@
       <input class="radio" type="radio" id="and" value="and" name="searchType" checked="checked"><label for="and">and</label>
       <input class="radio" type="radio" id="or" value="or" name="searchType"><label for="or">or</label>
       <!--リセットボタン-->
-      　/　<button type="button" class="button" align="center" onClick="chBxOff();">リセット</button>
+      　/　<button type="button" class="button" aligon="center" onClick="chBxOff();">リセット</button>
       </p>
     </form>
 
