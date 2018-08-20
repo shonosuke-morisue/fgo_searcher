@@ -5,10 +5,13 @@ function getCpList(){
   let cpList = new Array;
   let docId = 0;
   db.collection("cpList").get().then(function(querySnapshot) {
-
+    
+  console.time("a");
     querySnapshot.forEach(function(doc) {
+      // cpList.push(Object.keys(doc.data()).map(function (key) {return doc.data()[key]}));
       // doc.data() is never undefined for query doc snapshots
       // console.log(doc.id, " => ", doc.data());
+
       
       for (let i = 0 + (400 * docId); i < Object.keys(doc.data()).length + (400 * docId); i++) {
         if (i != 0) {
@@ -60,8 +63,15 @@ function getCpList(){
       }
       docId++;
     });
-    console.log("cpList:" + cpList);
+    // console.log("cpList:" + cpList);
+    // console.log("cpList[1]:" + cpList[1][1]);
+    // console.log("cpList[1]:" + cpList[1][1]["name"]);
+    // console.log("cpList[1]:" + cpList[1][2]);
+    // console.log("cpList[1]:" + cpList[1][2]["name"]);
+    // console.log("cpList[1]:" + cpList[0][1]);
+    // console.log("cpList[1]:" + cpList[0][1]["name"]);
     console.log("success!! db => cpList");
+    console.timeEnd("a");
     return cpList;
   }).catch(function(error) {
     console.log("Error getting document:", error);
@@ -75,7 +85,7 @@ function getAbilityTypeList(){
 
     querySnapshot.forEach(function(doc) {
       for (let i = 1; i <= Object.keys(doc.data()).length; i++) {
-        abilityTypeList[i] = new Array(doc.data()[i]["id"], doc.data()[i]["name"], doc.data()[i]["label"]);
+        abilityTypeList[i] = new Array(i, doc.data()[i]["name"], doc.data()[i]["label"]);
       }
     });
     console.log("abilityTypeList(生成):", abilityTypeList);
@@ -106,3 +116,28 @@ function getCpIconIds(){
   });
   return cpIconIds;
 }
+
+
+
+
+// // 効果カテゴリーをdbから取得
+// function getAbilityTypeList(){
+//   let abilityTypeList = new Array;
+//   db.collection("abilityTypeList").get().then(function(querySnapshot) {
+
+//     querySnapshot.forEach(function(doc) {
+
+//       abilityTypeList = Object.keys(doc.data()).map(function (key) {return doc.data()[key]});
+//       // for (let i = 1; i <= Object.keys(doc.data()).length; i++) {
+//       //   abilityTypeList[i] = new Array(doc.data()[i]["id"], doc.data()[i]["name"], doc.data()[i]["label"]);
+//       // }
+//     });
+
+//     console.log("abilityTypeList(生成):", abilityTypeList);
+//     console.log("abilityTypeList[1] => ", abilityTypeList[1]);
+//     console.log("success!! db => abilityTypeList");
+//     return abilityTypeList;
+//   }).catch(function(error) {
+//     console.log("Error getting document:", error);
+//   });
+// }
