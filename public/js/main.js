@@ -20,7 +20,9 @@ const db = firebase.firestore();
 // 概念礼装リスト、アビリティリストの定義
 
 var abilityTypeList = parseCSV2("/csv/abilityTypeList.csv");
+// var abilityTypeList = getAbilityTypeList();
 var cpList = parseCSV2("/csv/cpList.csv");
+// var cpList = getCpList();
 var logList = [];
 
 var checkListLast = [];

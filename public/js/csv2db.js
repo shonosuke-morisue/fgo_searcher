@@ -76,9 +76,12 @@ function csvToTable() {
 function csvToDb(fileName) {
   const csvData = parseCSV2("/csv/" + fileName + ".csv");
 
-  let batch = db.batch();  
+  let batch = db.batch();
   let count = 0;
-  const batchRef = db.collection("fgoSearcher").doc(fileName);
+  let docCount = 0;
+  const batchRef = db.collection(fileName);
+
+  
 
   csvData.forEach(function (item) {
     console.log(item);
@@ -89,7 +92,7 @@ function csvToDb(fileName) {
         let path = "path" + item[0];
         let googleDriveId = "googleDriveId" + item[0];
 
-        batch.set(batchRef,{　
+        batch.set(batchRef.doc(String(docCount)),{　
           id: item[0],　
           path: "/images/" + item[0],
           googleDriveId: item[0]
@@ -97,15 +100,16 @@ function csvToDb(fileName) {
         break;
 
       case "abilityTypeList":　// 効果カテゴリー
-        if (item[0] == 1) {
-          batch.set(batchRef,{
+        if (count == 0) {
+          batch.set(batchRef.doc(String(docCount)),{
             [item[0]]:{
+              id: item[0],
               name: item[1],
               label: item[2]
             }
           });          
         } else {
-          batch.update(batchRef,{
+          batch.update(batchRef.doc(String(docCount)),{
             [item[0]]:{
               name: item[1],
               label: item[2]
@@ -115,9 +119,10 @@ function csvToDb(fileName) {
         break;
 
       case "cpList":　// 概念礼装リスト
-        if (item[0] == "No") {
-          batch.set(batchRef,{
+        if (count == 0) {
+          batch.set(batchRef.doc(String(docCount)),{
             [item[0]]:{
+              id: item[0],
               rarity: item[1],
               cost: item[2],
               name: item[3],
@@ -161,8 +166,9 @@ function csvToDb(fileName) {
             }
           });          
         } else {
-          batch.update(batchRef,{
+          batch.update(batchRef.doc(String(docCount)),{
             [item[0]]:{
+              id: item[0],
               rarity: item[1],
               cost: item[2],
               name: item[3],
@@ -212,10 +218,11 @@ function csvToDb(fileName) {
         break;
     }
 
-    count = count + 1;
+    count++;
     if (count == 400) {
       bacthCommit(batch);
       count = 0;
+      docCount++;
       batch = db.batch();  
     }
   });
