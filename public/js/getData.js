@@ -1,12 +1,18 @@
 
+function loadTest(){
+  document.getElementById('loader-bg').style.display='block';  
+}
 
 // 概念礼装リストをdbから取得
 function getCpList(){
   let cpList = new Array;
   let docId = 0;
-  db.collection("cpList").get().then(function(querySnapshot) {
     
-  console.time("a");
+  document.getElementById('loader-bg').style.display='block';
+  
+  db.collection("cpList").get().then(function(querySnapshot) {
+    console.log("作業開始");
+    console.time("a");
     querySnapshot.forEach(function(doc) {
       // cpList.push(Object.keys(doc.data()).map(function (key) {return doc.data()[key]}));
       // doc.data() is never undefined for query doc snapshots
@@ -72,9 +78,11 @@ function getCpList(){
     // console.log("cpList[1]:" + cpList[0][1]["name"]);
     console.log("success!! db => cpList");
     console.timeEnd("a");
+    document.getElementById('loader-bg').style.display='none';
     return cpList;
   }).catch(function(error) {
     console.log("Error getting document:", error);
+    document.getElementById('loader-bg').style.display='none'
   });
 }
 
