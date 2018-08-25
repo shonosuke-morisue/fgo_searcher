@@ -1,9 +1,9 @@
-const firestore = firebase.firestore();
-const settings = {/* your settings... */ timestampsInSnapshots: true};
-firestore.settings(settings);
+// const firestore = firebase.firestore();
+// const settings = {/* your settings... */ timestampsInSnapshots: true};
+// firestore.settings(settings);
 
-// Initialize Cloud Firestore through Firebase
-const db = firebase.firestore();
+// // Initialize Cloud Firestore through Firebase
+// const db = firebase.firestore();
 
 /* //////////////////////////////////////////////////////////////
 
@@ -179,14 +179,14 @@ function chBxCheckOr(checkList,searchWord,sortType){
           break;
         }
       }
-      
+
       // 礼装名検索
       if(!(searchWord == "")){
         let wordCheck = wordSearch(searchWord,i);
         if (wordCheck) {
           msg = createMsg(msg,cpList,i);
           choiceList = setChoiceList(cpList,choiceList,msg,i);
-        } 
+        }
       }
     }
 
@@ -334,16 +334,21 @@ function createMsg(msg,cpList,cpId){
   var abilityMax = cpList[cpId][9]; // 効果（最大開放）
   var other = cpList[cpId][10]; // 備考
   var abilityTag = ""; // 能力タグ
-  var fileName = no; // アイコンのファイル名
-  
-  if (fileName < 10) {
-    fileName = "icon_000" + fileName + ".png";
-  } else if(fileName < 100) {
-    fileName = "icon_00" + fileName + ".png";
-  } else if(fileName < 1000) {
-    fileName = "icon_0" + fileName + ".png";
+  var fileName = ""; // アイコンのファイル名
+  var cardName = ""; // カードのファイル名
+
+  if (no < 10) {
+    cardName = "card_000" + no + ".png";
+    fileName = "icon_000" + no + ".png";
+  } else if(no < 100) {
+    cardName = "card_00" + no + ".png";
+    fileName = "icon_00" + no + ".png";
+  } else if(no < 1000) {
+    cardName = "card_0" + no + ".png";
+    fileName = "icon_0" + no + ".png";
   } else {
-    fileName = "icon_" + fileName + ".png";
+    cardName = "card_" + no + ".png";
+    fileName = "icon_" + no + ".png";
   }
 
   // 能力タグの生成
@@ -367,13 +372,34 @@ function createMsg(msg,cpList,cpId){
   }
   rarity = count;
 
-  // 備考があれば追加
+  // 差し込むHTMLを生成
   msg = "<div class='cp'><div class='cpParam'><div class='cpIcon'><img src='/images/icon/" + fileName + "' onerror='this.src=&quot;/images/icon/icon_0000.png&quot;'></div><div class='status'><span class='cpNo'>No."   + no + "</span> <span class='cpName'>"   + name + "</span><br><span class='rarity'>"   + rarity + "</span>　COST："   + cost + "<br>HP："    + hpMin + "("    + hpMax + ")　ATK："    + atkMin + "("    + atkMax + ")</div></div><div style='width:100%'>" + abilityTag + "</div><div class='abilityMin'>"    + abilityMin + "</div><div class='abilityMax'>"    + abilityMax + "</div>";
+  // 備考があれば追加
   if(other){
-    msg = msg + "<div class='other'>" + other + "</div>";
+    msg += "<div class='other'>" + other + "</div>";
   }
-  msg = msg + "</div>";
+  // カード画像+フレーバーテキスト画像追加
+  // msg += "<div id=\"andMore" + no + "\" class='andMore' onclick='switchAndMore(\"" + no + "\",\"" + cardName + "\");'>and more...▼<br></div>"
+  //   + "<div id='id" + no + "' style='display:none; clear:both; width=100%;'>"
+  //   + "</div>";
+
+  msg += "</div>";
   return msg;
+}
+
+// andmore 開閉処理
+
+function switchAndMore(no, cardName) {
+  var obj = document.getElementById("id" + no).style;
+  if (obj.display == "none") {
+    obj.display = "block";
+    document.getElementById("andMore" + no).innerHTML = "close▲";
+    document.getElementById("id" + no).innerHTML = "<div class='card'><img src='/images/card/" + cardName + "' onerror='this.src=\"/images/icon/icon_0000.png\"'></div><div class='flavorText'>" + "準備中" + "</div>";
+  } else{
+    obj.display = "none";
+    document.getElementById("andMore" + no).innerHTML = "and more...▼";
+    document.getElementById("id" + no).innerHTML = "";
+  }
 }
 
 
