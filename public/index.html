@@ -56,6 +56,7 @@
    <!-- FGOサーチャー(試験運用中) <a href="/log.html">ver.<span id="version"></span></a><br> -->
    FGOの概念礼装検索サービスです。<br>検索したい能力や条件にチェックを入れると、下のほうに条件に合致する礼装の情報が表示されます。<br>
    <p class="announce">※現在800番の礼装までしか対応していません。801番以降は順次追加しますので少々お待ちください。</p>
+   <p class="announce">※「防御系」に「強化耐性」、「その他」に「絆礼装」「バレンタイン礼装」の項目を追加しました。</p>
 
    <hr>
 
@@ -123,6 +124,7 @@
       <span class ="abilityType"><input class="checkbox" type="checkbox" id="invincible" value="invincible"><label for="invincible">回避・無敵</label></span>
       <span class ="abilityType"><input class="checkbox" type="checkbox" id="resistDebuff" value="resistDebuff"><label for="resistDebuff">弱体耐性</label></span>
       <span class ="abilityType"><input class="checkbox" type="checkbox" id="DebuffIgnore" value="DebuffIgnore"><label for="DebuffIgnore">弱体無効</label></span>
+      <span class ="abilityType"><input class="checkbox" type="checkbox" id="resistBuff" value="resistBuff"><label for="resistBuff">強化耐性</label></span>
       <br>
       </div>
 
@@ -148,6 +150,8 @@
       <span class ="abilityType"><input class="checkbox" type="checkbox" id="npChargeCountUp" value="npChargeCountUp"><label for="npChargeCountUp">宝具チャージ段階上昇</label></span>
       <span class ="abilityType"><input class="checkbox" type="checkbox" id="exit" value="exit"><label for="exit">退場時</label></span>
       <span class ="abilityType"><input class="checkbox" type="checkbox" id="rewardUp" value="rewardUp"><label for="rewardUp">報酬増加</label></span>
+      <span class ="abilityType"><input class="checkbox" type="checkbox" id="maxBond" value="maxBond"><label for="maxBond">絆礼装</label></span>
+      <span class ="abilityType"><input class="checkbox" type="checkbox" id="valentine" value="valentine"><label for="valentine">バレンタイン礼装</label></span>
       </div>
       <p>
       <!-- デバッグの必要に応じて使用
@@ -179,7 +183,7 @@
   <footer>
     <hr>
     当サイトは個人が運営しており「Fate/Grand Order」の開発・運営等とは一切関係ありません。当サイトを使用したことによる何らかの損害が生じても、一切責任は負いかねます。<br>
-    ↓連絡はこちらから<br>
+    ↓ご意見、ご要望はこちらから<br>
     <a href="https://twitter.com/fgo_searcher" class="twitter-follow-button" data-show-count="false">Follow @fgo_searcher</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
   </footer>
 

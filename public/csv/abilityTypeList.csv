@@ -28,3 +28,6 @@
 28,宝具チャージ段階上昇,npChargeCountUp
 29,退場時,exit
 30,報酬増加系,rewardUp
+31,強化耐性,resistBuff
+32,絆礼装,maxBond
+33,バレンタイン礼装,valentine
