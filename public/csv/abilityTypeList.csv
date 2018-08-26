@@ -21,7 +21,7 @@
 21,HP毎ターン回復,hpRegeneration
 22,HP回復量,healUp
 23,HP最大値上昇,maxHpUp
-24,初期NPチャージ,getNpCharge
+24,NPチャージ,getNpCharge
 25,NP獲得量,getNpUp
 26,NP毎ターン獲得,npRegeneration
 27,ターゲット集中状態を付与,targetGatherUp
