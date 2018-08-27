@@ -14,13 +14,22 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>FGO Searcher</title>
-    <meta name="description" content="FGO,FateGO,fate,FGOサーチャー,searcher,礼装,概念礼装">
+    <meta name="description" content="FGOの概念礼装検索サービスです。礼装名や能力など複数の条件から概念礼装を簡単に検索することができます。">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <link rel="manifest" href="site.webmanifest">
-    <link rel="apple-touch-icon" href="icon.png">
-    <!-- favicon.icoはルートディレクトに配置 -->
+    <!-- favicon設定 -->
+    <meta name="msapplication-config" content="./images/favicons/browserconfig.xml" />
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="./images/favicons/mstile-144x144.png">
+    <meta name="theme-color" content="#f5deb3">
+    <link rel="icon" type="image/x-icon" href="./images/favicons/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="./images/favicons/apple-touch-icon-180x180.png">
+    <link rel="mask-icon" href="./images/favicons/safari-icon.svg" color="#555" />
+    <link rel="icon" type="image/png" sizes="192x192" href="./images/favicons/android-chrome-192x192.png">
+    <link rel="manifest" href="./images/favicons/manifest.json">
 
+    
+    <!-- css設定 -->
     <link rel="stylesheet" href="css/main.css">
 
     <!-- update the version number as needed -->
@@ -46,22 +55,17 @@
   <!-- FGOサーチャー(試験運用中) <a href="/log.html">ver.<span id="version"></span></a><br> -->
   FGOの概念礼装検索サービスです。<br>検索したい能力や条件にチェックを入れると、下のほうに条件に合致する礼装の情報が表示されます。<br>
   
-  <div class="announce">
+  <div class="announce"> 
       ※現在800番の礼装までしか対応していません。801番以降は順次追加しますので少々お待ちください。<br>
       ※検索結果の件数を表示するようにしました。
   </div>  
   <div id="announceArea" onclick="switchAnnounceArea();" style="text-align:right;">and more...▼</div>
-  <div id="announce" class="contents_text" style="display:none;clear:both;">
+  <div id="announce" style="display:none;clear:both;">
       <div class="announce">
       ※「初期NPチャージ」→「NPチャージ」に変更しました。<br>
       ※「防御系」に「強化耐性」、「その他」に「絆礼装」「バレンタイン礼装」の項目を追加しました。
       </div>
   </div>
-
-  <!-- 後で整理してjsファイルに移す-->
-  <script>
-  </script>
-
 
   <!--
     ■今後やるかもやらないかも。
