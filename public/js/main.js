@@ -248,6 +248,12 @@ function chBxCheckAnd(checkList,searchWord,sortType){
 
     sort(choiceList,sortType);
     setMsg(msg,choiceList);
+
+    if (choiceList.length == undefined || choiceList.length == 0) {
+      document.getElementById("choiceCount").innerHTML = "【0件】";
+    } else {
+      document.getElementById("choiceCount").innerHTML = "【" + choiceList.length + "件】";
+    }
 }
 
 // 表示する概念礼装の情報リスト
@@ -379,9 +385,9 @@ function createMsg(msg,cpList,cpId){
     msg += "<div class='other'>" + other + "</div>";
   }
   // カード画像+フレーバーテキスト画像追加
-  msg += "<div id=\"andMore" + no + "\" class='andMore' onclick='switchAndMore(\"" + no + "\",\"" + cardName + "\");'>and more...▼<br></div>"
-    + "<div id='id" + no + "' style='display:none; clear:both; width=100%;'>"
-    + "</div>";
+  // msg += "<div id=\"andMore" + no + "\" class='andMore' onclick='switchAndMore(\"" + no + "\",\"" + cardName + "\");'>and more...▼<br></div>"
+  //   + "<div id='id" + no + "' style='display:none; clear:both; width=100%;'>"
+  //   + "</div>";
 
   msg += "</div>";
   return msg;
@@ -390,7 +396,7 @@ function createMsg(msg,cpList,cpId){
 // andmore 開閉処理
 
 function switchAndMore(no, cardName) {
-  var obj = document.getElementById("id" + no).style;
+  const obj = document.getElementById("id" + no).style;
   if (obj.display == "none") {
     obj.display = "block";
     document.getElementById("andMore" + no).innerHTML = "close▲";
@@ -399,6 +405,18 @@ function switchAndMore(no, cardName) {
     obj.display = "none";
     document.getElementById("andMore" + no).innerHTML = "and more...▼";
     document.getElementById("id" + no).innerHTML = "";
+  }
+}
+
+// announce 開閉処理
+function switchAnnounceArea() {
+  const obj = document.getElementById("announce").style;
+  if (obj.display == "none") {
+    obj.display = "block";
+    document.getElementById("announceArea").innerHTML = "close▲";
+  } else{
+    obj.display = "none";
+    document.getElementById("announceArea").innerHTML = "and more...▼";
   }
 }
 
