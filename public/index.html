@@ -28,7 +28,7 @@
     <link rel="icon" type="image/png" sizes="192x192" href="./images/favicons/android-chrome-192x192.png">
     <link rel="manifest" href="./images/favicons/manifest.json">
 
-    
+
     <!-- css設定 -->
     <link rel="stylesheet" href="css/main.css">
 
@@ -54,11 +54,12 @@
   <hr>
   <!-- FGOサーチャー(試験運用中) <a href="/log.html">ver.<span id="version"></span></a><br> -->
   FGOの概念礼装検索サービスです。<br>検索したい能力や条件にチェックを入れると、下のほうに条件に合致する礼装の情報が表示されます。<br>
-  
-  <div class="announce"> 
-      ※現在800番の礼装までしか対応していません。801番以降は順次追加しますので少々お待ちください。<br>
+
+  <div class="announce">
+    ※現在893番の礼装まで追加しました。今後礼装の追加に合わせて対応していきます。<br>
+    ※「攻撃系」に「防御無視」の項目を追加しました。<br>
       ※検索結果の件数を表示するようにしました。
-  </div>  
+  </div>
   <div id="announceArea" onclick="switchAnnounceArea();" style="text-align:right;">and more...▼</div>
   <div id="announce" style="display:none;clear:both;">
       <div class="announce">
@@ -128,6 +129,7 @@
       <span class ="abilityType"><input class="checkbox" type="checkbox" id="getStar" value="getStar"><label for="getStar">毎ターンスター獲得</label></span>
       <span class ="abilityType"><input class="checkbox" type="checkbox" id="invincibleIgnore" value="invincibleIgnore"><label for="invincibleIgnore">必中・無敵貫通</label></span>
       <span class ="abilityType"><input class="checkbox" type="checkbox" id="setDebuff" value="setDebuff"><label for="setDebuff">弱体付与</label></span>
+      <span class ="abilityType"><input class="checkbox" type="checkbox" id="defenseIgnore" value="defenseIgnore"><label for="defenseIgnore">防御無視</label></span>
       <br>
       </div>
 
