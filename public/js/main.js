@@ -379,9 +379,9 @@ function createMsg(msg,cpList,cpId){
     msg += "<div class='other'>" + other + "</div>";
   }
   // カード画像+フレーバーテキスト画像追加
-  // msg += "<div id=\"andMore" + no + "\" class='andMore' onclick='switchAndMore(\"" + no + "\",\"" + cardName + "\");'>and more...▼<br></div>"
-  //   + "<div id='id" + no + "' style='display:none; clear:both; width=100%;'>"
-  //   + "</div>";
+  msg += "<div id=\"andMore" + no + "\" class='andMore' onclick='switchAndMore(\"" + no + "\",\"" + cardName + "\");'>and more...▼<br></div>"
+    + "<div id='id" + no + "' style='display:none; clear:both; width=100%;'>"
+    + "</div>";
 
   msg += "</div>";
   return msg;
