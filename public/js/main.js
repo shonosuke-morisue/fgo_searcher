@@ -18,7 +18,6 @@
 *////////////////////////////////////////////////////////
 
 // 概念礼装リスト、アビリティリストの定義
-
 var abilityTypeList = parseCSV2("/csv/abilityTypeList.csv");
 // var abilityTypeList = getAbilityTypeList();
 var cpList = parseCSV2("/csv/cpList.csv");
@@ -30,11 +29,13 @@ var searchWordLast = "";
 var searchTypeLast;
 var sortTypeLast = [];
 
+const startNumberAbilityType = 12; // cplist の中の何列目からAbilityTypeの設定が始まるか（A列＝0）
+
 for (let i = 0; i < cpList.length; i++) {
-  cpList[i][0] = cpList[i][0] - 0;
-  cpList[i][1] = cpList[i][1] - 0;
-  cpList[i][5] = cpList[i][5] - 0;
-  cpList[i][7] = cpList[i][7] - 0;
+  cpList[i][0] -= 0;
+  cpList[i][1] -= 0;
+  cpList[i][5] -= 0;
+  cpList[i][7] -= 0;
 }
 
 
@@ -173,7 +174,7 @@ function chBxCheckOr(checkList,searchWord,sortType){
       for(var ii=0; ii<checkList.length;ii++){
 
         // 能力検索
-        if(cpList[i][Number(checkList[ii]) + 10] == "○"){
+        if(cpList[i][Number(checkList[ii]) + startNumberAbilityType] == "○"){
           msg = createMsg(msg,cpList,i);
           choiceList = setChoiceList(cpList,choiceList,msg,i);
           break;
@@ -222,7 +223,7 @@ function chBxCheckAnd(checkList,searchWord,sortType){
 
       // 能力検索
       for(var ii=0; ii<checkList.length;ii++){
-        if(cpList[i][Number(checkList[ii]) + 10] == "○"){
+        if(cpList[i][Number(checkList[ii]) + startNumberAbilityType] == "○"){
           orCheck = true;
         }else{
           orCheck = false;
@@ -339,6 +340,8 @@ function createMsg(msg,cpList,cpId){
   var abilityMin = cpList[cpId][8]; // 効果
   var abilityMax = cpList[cpId][9]; // 効果（最大開放）
   var other = cpList[cpId][10]; // 備考
+  var illustrator = cpList[cpId][11]; // イラストレーター
+  var flavorText = cpList[cpId][12]; // フレーバーテキスト
   var abilityTag = ""; // 能力タグ
   var fileName = ""; // アイコンのファイル名
   var cardName = ""; // カードのファイル名
@@ -360,7 +363,7 @@ function createMsg(msg,cpList,cpId){
   // 能力タグの生成
   for(var i=0; i<abilityTypeList.length;i++){
     for(var col=11; col<cpList[cpId].length;col++){
-      if(abilityTypeList[i][0] == col-10 && cpList[cpId][col] == "○"){
+      if(abilityTypeList[i][0] == col-startNumberAbilityType && cpList[cpId][col] == "○"){
         abilityTag = abilityTag + "<span class='choiceAbilityType'>" + abilityTypeList[i][1] + "</span>";
         break;
       }
@@ -384,8 +387,8 @@ function createMsg(msg,cpList,cpId){
   if(other){
     msg += "<div class='other'>" + other + "</div>";
   }
-  // カード画像+フレーバーテキスト画像追加
-  // msg += "<div id=\"andMore" + no + "\" class='andMore' onclick='switchAndMore(\"" + no + "\",\"" + cardName + "\");'>and more...▼<br></div>"
+  // カード画像 + イラストレーター + フレーバーテキスト画像追加
+  // msg += "<div id=\"andMore" + no + "\" class='andMore' onclick='switchAndMore(\"" + no + "\",\"" + cardName + "\",\"" + flavorText + "\",\"" + illustrator + "\");'>and more...▼<br></div>"
   //   + "<div id='id" + no + "' style='display:none; clear:both; width=100%;'>"
   //   + "</div>";
 
@@ -395,12 +398,12 @@ function createMsg(msg,cpList,cpId){
 
 // andmore 開閉処理
 
-function switchAndMore(no, cardName) {
+function switchAndMore(no, cardName, flavorText, illustrator) {
   const obj = document.getElementById("id" + no).style;
   if (obj.display == "none") {
     obj.display = "block";
     document.getElementById("andMore" + no).innerHTML = "close▲";
-    document.getElementById("id" + no).innerHTML = "<div class='card'><img src='/images/card/" + cardName + "' onerror='this.src=\"/images/icon/icon_0000.png\"'></div><div class='flavorText'>" + "準備中" + "</div>";
+    document.getElementById("id" + no).innerHTML = "<div class='card'><img src='/images/card/" + cardName + "' onerror='this.src=\"/images/icon/icon_0000.png\"'><div class='illustrator'>illustrator:" + illustrator + "</div></div><div class='flavorText'>" + flavorText + "</div>";
   } else{
     obj.display = "none";
     document.getElementById("andMore" + no).innerHTML = "and more...▼";

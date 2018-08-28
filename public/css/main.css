@@ -147,7 +147,10 @@ div.flavorText{
   background-color: #EEE;
 }
 
-
+div.illustrator{
+  font-size:small;
+  font-weight: bold;
+}
 
 
 .cpName{
