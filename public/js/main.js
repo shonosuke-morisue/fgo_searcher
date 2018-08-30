@@ -83,7 +83,7 @@ function createTag(checkList){
     console.log("checkList:"+ checkList);
 
       for(var i=0; i<checkList.length;i++){
-        console.log("abilityTypeList => ", abilityTypeList);
+        // console.log("abilityTypeList => ", abilityTypeList);
         for(var ii=0; ii<abilityTypeList.length;ii++){
           if(abilityTypeList[ii][2] == checkList[i]){
             msg = msg + "<span class='choiceAbilityType'>" + abilityTypeList[ii][1] + "</span>";
@@ -423,7 +423,6 @@ function switchAnnounceArea() {
   }
 }
 
-
 // 検索結果をメッセージとして挿入
 function setMsg(msg,choiceList){
     msg = "";
@@ -438,6 +437,28 @@ function setMsg(msg,choiceList){
     document.getElementById("container02").innerHTML = msg;
 }
 
+// チェックボックスがチェックされたログをDBに記録する処理
+function setChbxLog(checkList,checkListLast){
+  console.log("ここでDBに記録したい！");
+  console.log("checkList: " + checkList);
+  console.log("checkListLast: " + checkListLast);
+  let chbxCheckedList = new Array();
+
+  for (let i = 0; i < checkList.length; i++) {
+
+    if (checkListLast.length == 0) {
+      chbxCheckedList.push(checkList[i]);
+    }
+    // ここがうまく行ってない
+    for (let ii = 0; ii < checkListLast.length; ii++) {
+      if(0 > (checkList[i] + "").search(checkListLast[ii]) ){
+        chbxCheckedList.push(checkList[i]);
+      }
+    }
+  }
+  console.log("chbxCheckedList:" + chbxCheckedList);
+}
+
 //描画更新処理
 function update(){
   // 最終更新とチェックリストを比較して変化してるかチェック
@@ -446,19 +467,24 @@ function update(){
   var searchType = getSearchType();
   var sortType = getSortType();
 
-  var checkuUpdateChbx = false;
-  checkuUpdateChbx = !(checkList.toString() == checkListLast.toString());
+  var checkUpdateChbx = false;
+  checkUpdateChbx = !(checkList.toString() == checkListLast.toString());
 
-  var checkuUpdateWord = false;
-  checkuUpdateWord = !(searchWord == searchWordLast);
+  // チェックボックに変化があったらDBに記録処理
+  if (checkUpdateChbx) {
+    setChbxLog(checkList,checkListLast);
+  }
 
-  var checkuSearchType = false;
-  checkuSearchType = !(searchType == searchTypeLast);
+  var checkUpdateWord = false;
+  checkUpdateWord = !(searchWord == searchWordLast);
 
-  var checkuSortType = false;
-  checkuSortType = !(sortType.toString() == sortTypeLast.toString());
+  var checkSearchType = false;
+  checkSearchType = !(searchType == searchTypeLast);
 
-  if(checkuUpdateChbx || checkuUpdateWord || checkuSearchType || checkuSortType){
+  var checkSortType = false;
+  checkSortType = !(sortType.toString() == sortTypeLast.toString());
+
+  if(checkUpdateChbx || checkUpdateWord || checkSearchType || checkSortType){
 
     // チェックリストの状態を保存（最終入力との比較用）
     checkListLast = [];
