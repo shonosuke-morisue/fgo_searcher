@@ -60,8 +60,9 @@
 
   <div class="announce">
     ※現在893番の礼装まで追加しました。今後礼装の追加に合わせて対応していきます。<br>
+    ※「全チェック」ボタンを追加、全てのチェックボックスをチェックして検索タイプを「or」にします。<br>
     ※「攻撃系」に「防御無視」の項目を追加しました。<br>
-      ※検索結果の件数を表示するようにしました。
+    ※検索結果の件数を表示するようにしました。
   </div>
   <div id="announceArea" onclick="switchAnnounceArea();" style="text-align:right;">and more...▼</div>
   <div id="announce" style="display:none;clear:both;">
@@ -88,6 +89,8 @@
       <input class="radio" type="radio" id="or" value="or" name="searchType"><label for="or">or</label>
       <!--リセットボタン-->
       　/　<button type="button" class="button" aligon="center" onClick="chBxOff();">リセット</button>
+      <!--リセットボタン-->
+      　/　<button type="button" class="button" aligon="center" onClick="chBxOn();">全チェック</button>
       </p>
     </form>
 

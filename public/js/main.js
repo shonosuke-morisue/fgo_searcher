@@ -69,6 +69,17 @@ function chBxOff(){
     console.log("チェックボックス外しオワタ");
 }
 
+// 全てのチェックボックのチェックする 
+function chBxOn(){
+  document.getElementById("searchWord").value = "";
+  for(i=0; i<abilityTypeList.length; i++) {
+    document.getElementById("formAbilityType").elements[abilityTypeList[i][2]].checked = true;
+    document.getElementById("formSearchType").elements[1].checked = true;
+    console.log("カウント：" + [i]);
+  }
+    console.log("チェックボックス全部チェックしたった");
+}
+
 // 選択しているチェックボックスの一覧表示
 function showChBx(checkList) {
     var msg = createTag(checkList);
@@ -193,6 +204,7 @@ function chBxCheckOr(checkList,searchWord,sortType){
 
     sort(choiceList,sortType);
     setMsg(msg,choiceList);
+    setChoiceCount(choiceList);
 }
 
 
@@ -249,13 +261,18 @@ function chBxCheckAnd(checkList,searchWord,sortType){
 
     sort(choiceList,sortType);
     setMsg(msg,choiceList);
-
-    if (choiceList.length == undefined || choiceList.length == 0) {
-      document.getElementById("choiceCount").innerHTML = "【0件】";
-    } else {
-      document.getElementById("choiceCount").innerHTML = "【" + choiceList.length + "件】";
-    }
+    setChoiceCount(choiceList);
 }
+
+// 条件に該当した礼装の件数を表示
+function setChoiceCount(choiceList) {
+  if (choiceList.length == undefined || choiceList.length == 0) {
+    document.getElementById("choiceCount").innerHTML = "【0件】";
+  } else {
+    document.getElementById("choiceCount").innerHTML = "【" + choiceList.length + "件】";
+  }
+}
+
 
 // 表示する概念礼装の情報リスト
 function setChoiceList(cpList,choiceList,msg,i){
