@@ -69,7 +69,7 @@ function chBxOff(){
     console.log("チェックボックス外しオワタ");
 }
 
-// 全てのチェックボックのチェックする 
+// 全てのチェックボックのチェックする
 function chBxOn(){
   document.getElementById("searchWord").value = "";
   for(i=0; i<abilityTypeList.length; i++) {
@@ -404,10 +404,10 @@ function createMsg(msg,cpList,cpId){
   if(other){
     msg += "<div class='other'>" + other + "</div>";
   }
-  // カード画像 + イラストレーター + フレーバーテキスト画像追加
-  // msg += "<div id=\"andMore" + no + "\" class='andMore' onclick='switchAndMore(\"" + no + "\",\"" + cardName + "\",\"" + flavorText + "\",\"" + illustrator + "\");'>and more...▼<br></div>"
-  //   + "<div id='id" + no + "' style='display:none; clear:both; width=100%;'>"
-  //   + "</div>";
+  // カード画像 + イラストレーター + 解説を追加
+  msg += "<div id=\"andMore" + no + "\" class='andMore' onclick='switchAndMore(\"" + no + "\",\"" + cardName + "\",\"" + flavorText + "\",\"" + illustrator + "\");'>and more...▼<br></div>"
+    + "<div id='id" + no + "' style='display:none; clear:both; width=100%;'>"
+    + "</div>";
 
   msg += "</div>";
   return msg;
@@ -420,7 +420,7 @@ function switchAndMore(no, cardName, flavorText, illustrator) {
   if (obj.display == "none") {
     obj.display = "block";
     document.getElementById("andMore" + no).innerHTML = "close▲";
-    document.getElementById("id" + no).innerHTML = "<div class='card'><img src='/images/card/" + cardName + "' onerror='this.src=\"/images/icon/icon_0000.png\"'><div class='illustrator'>illustrator:" + illustrator + "</div></div><div class='flavorText'>" + flavorText + "</div>";
+    document.getElementById("id" + no).innerHTML = "<div class='card'><img src='/images/card/" + cardName + "' onerror='this.src=\"/images/icon/icon_0000.png\"'><div>イラストレーター： <span class='illustrator'>" + illustrator + "</span></div></div><div class='flavorText'>" + flavorText + "</div>";
   } else{
     obj.display = "none";
     document.getElementById("andMore" + no).innerHTML = "and more...▼";
