@@ -209,3 +209,62 @@ footer {
   z-index: 10;
   opacity: 0.6;
 }
+
+
+/* /////////////////////// */
+/* tiny-skider用CSS ここから */
+/* /////////////////////// */
+
+.tns-outer {
+  width: 100％;
+  margin: 0 auto;
+  position: relative;
+}
+.tns-inner {
+  position: relative;
+}
+.tns-nav {
+  text-align: center;
+}
+.tns-nav > [aria-controls] {
+  width: 9px;
+  height: 9px;
+  margin: 0 5px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: #dddddd;
+}
+.tns-nav > [aria-selected="true"] {
+  background: #999999;
+}
+[data-controls="prev"],
+[data-controls="next"] {
+  position: absolute;
+  z-index: 2;
+  top: 50%;
+  width: 30px;
+  height: 30px;
+  margin-top: -15px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  outline: none;
+  opacity: 0.9;
+  background: #8a8a8a;
+  color: #ffffff;
+  line-height: 30px;
+  text-align: center;
+}
+[data-controls="prev"]:hover,
+[data-controls="next"]:hover {
+  background: #8a8a8a;
+}
+[data-controls="prev"] {
+  left: 10px;
+}
+[data-controls="next"] {
+  right: 10px;
+}
+
+/* ///////////////////////　tiny-skider用CSS ここまで */

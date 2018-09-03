@@ -43,9 +43,11 @@
     <!-- initialize the SDK after all desired features are loaded -->
     <!-- <script defer src="/__/firebase/init.js"></script> -->
 
-    <script defer src="/js/csv2db.js"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.3.0/tiny-slider.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.3.0/min/tiny-slider.js"></script>
+
     <!-- <script defer src="/js/getData.js"></script> -->
-    <script defer src="/js/main.js"></script>
 
   </head>
   <body>
@@ -59,7 +61,7 @@
   FGOの概念礼装検索サービスです。<br>検索したい能力や条件にチェックを入れると、下のほうに条件に合致する礼装の情報が表示されます。<br>
 
   <div class="announce">
-    ※カードイラスト、解説を追加、現在200番まで対応。201番以降は今後追加していきます。<br>
+    ※カードイラストを400番まで対応。<br>
   </div>
   <div id="announceArea" onclick="switchAnnounceArea();" style="text-align:right;">and more...▼</div>
   <div id="announce" style="display:none;clear:both;">
@@ -78,7 +80,7 @@
     ・一覧のリスト（今は条件に合ったものしか出ない）
     ・英霊肖像、英霊旅装、同人礼装　などなど他にもあるかも
     ・イベント特効礼装
-    ・特定状態の除外設定（絆礼装は外す、など）
+    ・特定状態の除外設定（絆礼装は外す、など）→とりあえず絆礼装だけ対応予定
     ・能力の効果量ソート（能力をひとつだけ選択した時、限定ならできるかも）
     ・チェックされてる能力のデータ集計
   -->
@@ -214,11 +216,39 @@
     当サイトは個人が運営しており「Fate/Grand Order」の開発・運営等とは一切関係ありません。当サイトを使用したことによる何らかの損害が生じても、一切責任は負いかねます。<br>
     ↓ご意見、ご要望はこちらから<br>
     <a href="https://twitter.com/fgo_searcher" class="twitter-follow-button" data-show-count="false">Follow @fgo_searcher</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script><br>
-    <!-- <hr>
-    <a href="https://www.amazon.co.jp/gp/product/B07FXQ2L38/ref=as_li_ss_il?ie=UTF8&linkCode=li3&tag=fukuroudiary-22&linkId=f8bafb47612abeba5ccfe2b90eccda30&language=ja_JP" target="_blank"><img border="0" src="//ws-fe.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=B07FXQ2L38&Format=_SL250_&ID=AsinImage&MarketPlace=JP&ServiceVersion=20070822&WS=1&tag=fukuroudiary-22&language=ja_JP" ></a><img src="https://ir-jp.amazon-adsystem.com/e/ir?t=fukuroudiary-22&language=ja_JP&l=li3&o=9&a=B07FXQ2L38" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" /> -->
+    <hr>
+    <div class="my-slider">
+      <div><a href="https://www.amazon.co.jp/gp/product/B07FXQ2L38/ref=as_li_ss_il?ie=UTF8&linkCode=li3&tag=fukuroudiary-22&linkId=f8bafb47612abeba5ccfe2b90eccda30&language=ja_JP" target="_blank"><img border="0" src="//ws-fe.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=B07FXQ2L38&Format=_SL250_&ID=AsinImage&MarketPlace=JP&ServiceVersion=20070822&WS=1&tag=fukuroudiary-22&language=ja_JP" ></a><img src="https://ir-jp.amazon-adsystem.com/e/ir?t=fukuroudiary-22&language=ja_JP&l=li3&o=9&a=B07FXQ2L38" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" /></div>
+      <div><a href="https://www.amazon.co.jp/Fate-Grand-Order-material-I%E3%80%90%E6%9B%B8%E7%B1%8D%E3%80%91/dp/B01K1LELWA/ref=as_li_ss_il?_encoding=UTF8&pd_rd_i=B01K1LELWA&pd_rd_r=917d0e02-afa0-11e8-a283-f3e06e7dd4d2&pd_rd_w=UMcde&pd_rd_wg=0q0dw&pf_rd_i=desktop-dp-sims&pf_rd_m=AN1VRQENFRJN5&pf_rd_p=cda7018a-662b-401f-9c16-bd4ec317039e&pf_rd_r=VTGBN753BR7ZQZ4WJTNX&pf_rd_s=desktop-dp-sims&pf_rd_t=40701&psc=1&refRID=VTGBN753BR7ZQZ4WJTNX&linkCode=li3&tag=fukuroudiary-22&linkId=1beaa5548ff7269196d762b43d172a27&language=ja_JP" target="_blank"><img border="0" src="//ws-fe.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=B01K1LELWA&Format=_SL250_&ID=AsinImage&MarketPlace=JP&ServiceVersion=20070822&WS=1&tag=fukuroudiary-22&language=ja_JP" ></a><img src="https://ir-jp.amazon-adsystem.com/e/ir?t=fukuroudiary-22&language=ja_JP&l=li3&o=9&a=B01K1LELWA" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" /></div>
+      <div><a href="https://www.amazon.co.jp/Fate-Grand-Order-material-II%E3%80%90%E6%9B%B8%E7%B1%8D%E3%80%91/dp/B01K1M2J9Q/ref=as_li_ss_il?_encoding=UTF8&pd_rd_i=B01K1M2J9Q&pd_rd_r=07ba2a15-30b1-4409-937c-f2b2b8ba7879&pd_rd_w=jaM3Y&pd_rd_wg=M1aLs&psc=1&refRID=PVK00NKB17T9J4Y22KTV&linkCode=li3&tag=fukuroudiary-22&linkId=b78c03700142dcf234863451183eb27b&language=ja_JP" target="_blank"><img border="0" src="//ws-fe.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=B01K1M2J9Q&Format=_SL250_&ID=AsinImage&MarketPlace=JP&ServiceVersion=20070822&WS=1&tag=fukuroudiary-22&language=ja_JP" ></a><img src="https://ir-jp.amazon-adsystem.com/e/ir?t=fukuroudiary-22&language=ja_JP&l=li3&o=9&a=B01K1M2J9Q" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" /></div>
+      <div><a href="https://www.amazon.co.jp/Fate-Grand-Order-material-III%E3%80%90%E6%9B%B8%E7%B1%8D%E3%80%91/dp/B01N0QIBO9/ref=as_li_ss_il?_encoding=UTF8&pd_rd_i=B01N0QIBO9&pd_rd_r=917d0e02-afa0-11e8-a283-f3e06e7dd4d2&pd_rd_w=UMcde&pd_rd_wg=0q0dw&pf_rd_i=desktop-dp-sims&pf_rd_m=AN1VRQENFRJN5&pf_rd_p=cda7018a-662b-401f-9c16-bd4ec317039e&pf_rd_r=VTGBN753BR7ZQZ4WJTNX&pf_rd_s=desktop-dp-sims&pf_rd_t=40701&psc=1&refRID=VTGBN753BR7ZQZ4WJTNX&linkCode=li3&tag=fukuroudiary-22&linkId=8f55e465eb44b7abfe64590baab8a803&language=ja_JP" target="_blank"><img border="0" src="//ws-fe.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=B01N0QIBO9&Format=_SL250_&ID=AsinImage&MarketPlace=JP&ServiceVersion=20070822&WS=1&tag=fukuroudiary-22&language=ja_JP" ></a><img src="https://ir-jp.amazon-adsystem.com/e/ir?t=fukuroudiary-22&language=ja_JP&l=li3&o=9&a=B01N0QIBO9" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" /></div>
+      <div><a href="https://www.amazon.co.jp/Fate-Grand-Order-material-IV%E3%80%90%E6%9B%B8%E7%B1%8D%E3%80%91/dp/B0785GSQSK/ref=as_li_ss_il?_encoding=UTF8&pd_rd_i=B0785GSQSK&pd_rd_r=917d0e02-afa0-11e8-a283-f3e06e7dd4d2&pd_rd_w=UMcde&pd_rd_wg=0q0dw&pf_rd_i=desktop-dp-sims&pf_rd_m=AN1VRQENFRJN5&pf_rd_p=cda7018a-662b-401f-9c16-bd4ec317039e&pf_rd_r=VTGBN753BR7ZQZ4WJTNX&pf_rd_s=desktop-dp-sims&pf_rd_t=40701&psc=1&refRID=VTGBN753BR7ZQZ4WJTNX&linkCode=li3&tag=fukuroudiary-22&linkId=5f365377ed4b6a9fb2db3d6f07d7928c&language=ja_JP" target="_blank"><img border="0" src="//ws-fe.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=B0785GSQSK&Format=_SL250_&ID=AsinImage&MarketPlace=JP&ServiceVersion=20070822&WS=1&tag=fukuroudiary-22&language=ja_JP" ></a><img src="https://ir-jp.amazon-adsystem.com/e/ir?t=fukuroudiary-22&language=ja_JP&l=li3&o=9&a=B0785GSQSK" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" /></div>
+      <div><a href="https://www.amazon.co.jp/Fate-Grand-Order-material-V%E3%80%90%E6%9B%B8%E7%B1%8D%E3%80%91/dp/B01KJJLKZA/ref=as_li_ss_il?_encoding=UTF8&pd_rd_i=B01KJJLKZA&pd_rd_r=917d0e02-afa0-11e8-a283-f3e06e7dd4d2&pd_rd_w=UMcde&pd_rd_wg=0q0dw&pf_rd_i=desktop-dp-sims&pf_rd_m=AN1VRQENFRJN5&pf_rd_p=cda7018a-662b-401f-9c16-bd4ec317039e&pf_rd_r=VTGBN753BR7ZQZ4WJTNX&pf_rd_s=desktop-dp-sims&pf_rd_t=40701&psc=1&refRID=VTGBN753BR7ZQZ4WJTNX&linkCode=li3&tag=fukuroudiary-22&linkId=5174b63a829153033d56ba7ab722794b&language=ja_JP" target="_blank"><img border="0" src="//ws-fe.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=B01KJJLKZA&Format=_SL250_&ID=AsinImage&MarketPlace=JP&ServiceVersion=20070822&WS=1&tag=fukuroudiary-22&language=ja_JP" ></a><img src="https://ir-jp.amazon-adsystem.com/e/ir?t=fukuroudiary-22&language=ja_JP&l=li3&o=9&a=B01KJJLKZA" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" /></div>
+      <div><a href="https://www.amazon.co.jp/Grand-Order-MOONLIGHT-LOSTROOM-Blu-ray/dp/B07GNSPTVM/ref=as_li_ss_il?ie=UTF8&qid=1535996746&sr=8-8&keywords=FGO&linkCode=li3&tag=fukuroudiary-22&linkId=4627c0ffefdefe6687c86c225dcbe545&language=ja_JP" target="_blank"><img border="0" src="//ws-fe.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=B07GNSPTVM&Format=_SL250_&ID=AsinImage&MarketPlace=JP&ServiceVersion=20070822&WS=1&tag=fukuroudiary-22&language=ja_JP" ></a><img src="https://ir-jp.amazon-adsystem.com/e/ir?t=fukuroudiary-22&language=ja_JP&l=li3&o=9&a=B07GNSPTVM" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" /></div>
+      <div><a href="https://www.amazon.co.jp/Grand-Order-%E7%A5%9E%E8%81%96%E5%86%86%E5%8D%93%E9%A0%98%E5%9F%9F%E3%82%AD%E3%83%A3%E3%83%A1%E3%83%AD%E3%83%83%E3%83%88-%E5%AE%8C%E5%85%A8%E7%94%9F%E7%94%A3%E9%99%90%E5%AE%9A%E7%89%88-Blu-ray/dp/B073X595DP/ref=as_li_ss_il?ie=UTF8&qid=1535996746&sr=8-9&keywords=FGO&linkCode=li3&tag=fukuroudiary-22&linkId=9662a58b72254e714ca446aa9d2fd71b&language=ja_JP" target="_blank"><img border="0" src="//ws-fe.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=B073X595DP&Format=_SL250_&ID=AsinImage&MarketPlace=JP&ServiceVersion=20070822&WS=1&tag=fukuroudiary-22&language=ja_JP" ></a><img src="https://ir-jp.amazon-adsystem.com/e/ir?t=fukuroudiary-22&language=ja_JP&l=li3&o=9&a=B073X595DP" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" /></div>
+      <div><a href="https://www.amazon.co.jp/Grand-Order-Original-Soundtrack-%E5%88%9D%E5%9B%9E%E4%BB%95%E6%A7%98%E9%99%90%E5%AE%9A%E7%9B%A4/dp/B01NCO7DW2/ref=as_li_ss_il?_encoding=UTF8&pd_rd_i=B01NCO7DW2&pd_rd_r=3bbe1b5c-afa1-11e8-91f0-930b69d3e606&pd_rd_w=Yy2CD&pd_rd_wg=QkQPB&pf_rd_i=desktop-dp-sims&pf_rd_m=AN1VRQENFRJN5&pf_rd_p=3bcbe1ec-8f19-4541-af44-0e4d87f49001&pf_rd_r=J6KPW4J5A9JRCP3W8Q3A&pf_rd_s=desktop-dp-sims&pf_rd_t=40701&psc=1&refRID=J6KPW4J5A9JRCP3W8Q3A&linkCode=li3&tag=fukuroudiary-22&linkId=4f07fd7c539bbd9f02e91acb238fd704&language=ja_JP" target="_blank"><img border="0" src="//ws-fe.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=B01NCO7DW2&Format=_SL250_&ID=AsinImage&MarketPlace=JP&ServiceVersion=20070822&WS=1&tag=fukuroudiary-22&language=ja_JP" ></a><img src="https://ir-jp.amazon-adsystem.com/e/ir?t=fukuroudiary-22&language=ja_JP&l=li3&o=9&a=B01NCO7DW2" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" /></div>
+      <div><a href="https://www.amazon.co.jp/Grand-Order-Original-Soundtrack-%E5%88%9D%E5%9B%9E%E4%BB%95%E6%A7%98%E9%99%90%E5%AE%9A%E7%9B%A4/dp/B078JDLN9Q/ref=as_li_ss_il?ie=UTF8&qid=1535996746&sr=8-10&keywords=FGO&linkCode=li3&tag=fukuroudiary-22&linkId=7feef47a93eda58178816e97110b8c01&language=ja_JP" target="_blank"><img border="0" src="//ws-fe.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=B078JDLN9Q&Format=_SL250_&ID=AsinImage&MarketPlace=JP&ServiceVersion=20070822&WS=1&tag=fukuroudiary-22&language=ja_JP" ></a><img src="https://ir-jp.amazon-adsystem.com/e/ir?t=fukuroudiary-22&language=ja_JP&l=li3&o=9&a=B078JDLN9Q" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" /></div>
+      <div><a href="https://www.amazon.co.jp/%E9%80%86%E5%85%89%EF%BC%88FGO%E7%9B%A4%EF%BC%89-%E5%9D%82%E6%9C%AC%E7%9C%9F%E7%B6%BE/dp/B07D9TTT2L/ref=as_li_ss_il?ie=UTF8&qid=1535996746&sr=8-5&keywords=FGO&linkCode=li3&tag=fukuroudiary-22&linkId=7ea7495a3cc96a9a20273668d61a29c6&language=ja_JP" target="_blank"><img border="0" src="//ws-fe.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=B07D9TTT2L&Format=_SL250_&ID=AsinImage&MarketPlace=JP&ServiceVersion=20070822&WS=1&tag=fukuroudiary-22&language=ja_JP" ></a><img src="https://ir-jp.amazon-adsystem.com/e/ir?t=fukuroudiary-22&language=ja_JP&l=li3&o=9&a=B07D9TTT2L" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" /></div>
+      <!-- <div><a href="https://www.amazon.co.jp/Grand-First-Order-%E5%AE%8C%E5%85%A8%E7%94%9F%E7%94%A3%E9%99%90%E5%AE%9A%E7%89%88-Blu-ray/dp/B01NBPS6F3/ref=as_li_ss_il?_encoding=UTF8&qid=1535996907&sr=8-9&linkCode=li3&tag=fukuroudiary-22&linkId=3d81dacbfc1144d9811985871afa6fa0&language=ja_JP" target="_blank"><img border="0" src="//ws-fe.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=B01NBPS6F3&Format=_SL250_&ID=AsinImage&MarketPlace=JP&ServiceVersion=20070822&WS=1&tag=fukuroudiary-22&language=ja_JP" ></a><img src="https://ir-jp.amazon-adsystem.com/e/ir?t=fukuroudiary-22&language=ja_JP&l=li3&o=9&a=B01NBPS6F3" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" /></div> -->
+    </div>
   </footer>
-
   </div>
+
+<!-- javascript 読み込み -->
+
+  <script defer src="/js/csv2db.js"></script>
+  <script defer src="/js/main.js"></script>
+
+  <script>
+      var slider = tns({
+        "container": ".my-slider",
+        "items": 3,
+        "mouseDrag": true,
+        "slideBy": "page",
+        // "swipeAngle": false,
+        "speed": 600
+      });
+    </script>
   </body>
 </html>
 
