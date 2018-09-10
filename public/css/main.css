@@ -217,7 +217,7 @@ footer {
 
 .tns-outer {
   width: 100％;
-  margin: 0 auto;
+  margin: 20px auto 10px auto;
   position: relative;
 }
 .tns-inner {
@@ -242,7 +242,7 @@ footer {
 [data-controls="next"] {
   position: absolute;
   z-index: 2;
-  top: 50%;
+  top: 0%;
   width: 30px;
   height: 30px;
   margin-top: -15px;
