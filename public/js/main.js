@@ -64,6 +64,7 @@ function chBxOff(){
   document.getElementById("searchWord").value = "";
   for(i=0; i<abilityTypeList.length; i++) {
     document.getElementById("formAbilityType").elements[abilityTypeList[i][2]].checked = false;
+    document.getElementById("formIgnoreAbilityType").elements[abilityTypeList[i][2]].checked = false;
     document.getElementById("container02").innerHTML = "<div class='contents_text'>該当する概念礼装がありません。</div>";
     console.log("カウント：" + [i]);
   }
@@ -82,13 +83,13 @@ function chBxOn(){
 }
 
 // 選択しているチェックボックスの一覧表示
-function showChBx(checkList) {
-    var msg = createTag(checkList);
+function showChBx(checkList,ignoreCheckList) {
+    var msg = createTag(checkList,ignoreCheckList);
       document.getElementById("container").innerHTML = msg;
 }
 
 // タグを生成
-function createTag(checkList){
+function createTag(checkList,ignoreCheckList){
     var msg = "";
     var checkList = checkList;
 
@@ -101,6 +102,17 @@ function createTag(checkList){
         }
       }
     }
+
+    for(var i=0; i<ignoreCheckList.length;i++){
+      // console.log("abilityTypeList => ", abilityTypeList);
+      for(var ii=0; ii<abilityTypeList.length;ii++){
+        if(abilityTypeList[ii][2] == ignoreCheckList[i]){
+          msg += "<span class='choiceIgnoreAbilityType'>" + abilityTypeList[ii][1] + "</span>";
+          break;
+        }
+      }
+    }
+
     if(msg == ""){
       msg = "<div class='contents_text'>選択されている能力がありません。</div>"
     }
@@ -564,7 +576,7 @@ function update(){
     sortTypeLast = sortType.concat();
 
     // 選択している能力の描画更新
-    showChBx(checkList);
+    showChBx(checkList,ignoreCheckList);
 
     // 能力から概念礼装を検索して描画する処理
     if(document.getElementById("and").checked){

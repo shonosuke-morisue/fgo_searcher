@@ -61,7 +61,8 @@
   FGOの概念礼装検索サービスです。<br>検索したい能力や条件にチェックを入れると、下のほうに条件に合致する礼装の情報が表示されます。<br>
 
   <div class="announce">
-    ※カードイラストを400番まで対応。<br>
+    ※カードイラストを429番まで対応。<br>
+    ※特定の条件を検索結果から除外する機能を追加しました。除外した能力は「選択中の能力」の欄に赤いタグで表示されます。<br>
   </div>
   <div id="announceArea" onclick="switchAnnounceArea();" style="text-align:right;">and more...▼</div>
   <div id="announce" style="display:none;clear:both;">
@@ -125,137 +126,158 @@
       </div>
     </form>
 
-    <!--能力リスト-->
-    <form id="formAbilityType">
-      <div class="headline01" onclick="obj=document.getElementById('attack').style; obj.display=(obj.display=='none')?'block':'none';">攻撃系<br></div>
-      <div id="attack" class="contents_text" style="display:none;clear:both;">
-      <span class ="abilityType"><input class="checkbox" type="checkbox" id="attackUp" value="attackUp"><label for="attackUp">攻撃力</label></span>
-      <span class ="abilityType"><input class="checkbox" type="checkbox" id="npDamageUp" value="npDamageUp"><label for="npDamageUp">宝具威力</label></span>
-      <span class ="abilityType"><input class="checkbox" type="checkbox" id="damageUp" value="damageUp"><label for="damageUp">ダメージプラス</label></span>
-      <span class ="abilityType"><input class="checkbox" type="checkbox" id="specialAttackUp" value="specialAttackUp"><label for="specialAttackUp">特攻状態を付与</label></span>
-      <span class ="abilityType"><input class="checkbox" type="checkbox" id="busterUp" value="busterUp"><label for="busterUp">Buster</label></span>
-      <span class ="abilityType"><input class="checkbox" type="checkbox" id="quickUp" value="quickUp"><label for="quickUp">Quick</label></span>
-      <span class ="abilityType"><input class="checkbox" type="checkbox" id="artsUp" value="artsUp"><label for="artsUp">Arts</label></span>
-      <span class ="abilityType"><input class="checkbox" type="checkbox" id="criticalDamageUp" value="criticalDamageUp"><label for="criticalDamageUp">クリティカル威力アップ</label></span>
-      <span class ="abilityType"><input class="checkbox" type="checkbox" id="starGenerationUp" value="starGenerationUp"><label for="starGenerationUp">スター発生率</label></span>
-      <span class ="abilityType"><input class="checkbox" type="checkbox" id="starGatherUp" value="starGatherUp"><label for="starGatherUp">スター集中</label></span>
-      <span class ="abilityType"><input class="checkbox" type="checkbox" id="getStar" value="getStar"><label for="getStar">毎ターンスター獲得</label></span>
-      <span class ="abilityType"><input class="checkbox" type="checkbox" id="invincibleIgnore" value="invincibleIgnore"><label for="invincibleIgnore">必中・無敵貫通</label></span>
-      <span class ="abilityType"><input class="checkbox" type="checkbox" id="setDebuff" value="setDebuff"><label for="setDebuff">弱体付与</label></span>
-      <span class ="abilityType"><input class="checkbox" type="checkbox" id="defenseIgnore" value="defenseIgnore"><label for="defenseIgnore">防御無視</label></span>
-      <br>
+    <hr>
+
+  <div class="contents">
+    <input type="radio" id="tab_label1" name="tab" checked>
+    <label for="tab_label1">能力選択</label>
+    
+    <input type="radio" id="tab_label2" name="tab">
+    <label for="tab_label2">能力除外</label>
+    <!-- <input type="radio" id="tab_label3" name="tab">
+    <label for="tab_label3">タブラベル３</label> -->
+    
+    <div class="tab_box">
+      <div id="tabContent1">	
+        <!--能力リスト-->
+        <form id="formAbilityType">
+          <div class="headline01" onclick="obj=document.getElementById('attack').style; obj.display=(obj.display=='none')?'block':'none';">攻撃系<br></div>
+          <div id="attack" class="contents_text" style="display:none;clear:both;">
+          <span class ="abilityType"><input class="checkbox" type="checkbox" id="attackUp" value="attackUp"><label for="attackUp">攻撃力</label></span>
+          <span class ="abilityType"><input class="checkbox" type="checkbox" id="npDamageUp" value="npDamageUp"><label for="npDamageUp">宝具威力</label></span>
+          <span class ="abilityType"><input class="checkbox" type="checkbox" id="damageUp" value="damageUp"><label for="damageUp">ダメージプラス</label></span>
+          <span class ="abilityType"><input class="checkbox" type="checkbox" id="specialAttackUp" value="specialAttackUp"><label for="specialAttackUp">特攻状態を付与</label></span>
+          <span class ="abilityType"><input class="checkbox" type="checkbox" id="busterUp" value="busterUp"><label for="busterUp">Buster</label></span>
+          <span class ="abilityType"><input class="checkbox" type="checkbox" id="quickUp" value="quickUp"><label for="quickUp">Quick</label></span>
+          <span class ="abilityType"><input class="checkbox" type="checkbox" id="artsUp" value="artsUp"><label for="artsUp">Arts</label></span>
+          <span class ="abilityType"><input class="checkbox" type="checkbox" id="criticalDamageUp" value="criticalDamageUp"><label for="criticalDamageUp">クリティカル威力アップ</label></span>
+          <span class ="abilityType"><input class="checkbox" type="checkbox" id="starGenerationUp" value="starGenerationUp"><label for="starGenerationUp">スター発生率</label></span>
+          <span class ="abilityType"><input class="checkbox" type="checkbox" id="starGatherUp" value="starGatherUp"><label for="starGatherUp">スター集中</label></span>
+          <span class ="abilityType"><input class="checkbox" type="checkbox" id="getStar" value="getStar"><label for="getStar">毎ターンスター獲得</label></span>
+          <span class ="abilityType"><input class="checkbox" type="checkbox" id="invincibleIgnore" value="invincibleIgnore"><label for="invincibleIgnore">必中・無敵貫通</label></span>
+          <span class ="abilityType"><input class="checkbox" type="checkbox" id="setDebuff" value="setDebuff"><label for="setDebuff">弱体付与</label></span>
+          <span class ="abilityType"><input class="checkbox" type="checkbox" id="defenseIgnore" value="defenseIgnore"><label for="defenseIgnore">防御無視</label></span>
+          <br>
+          </div>
+
+          <div class="headline01" onclick="obj=document.getElementById('defence').style; obj.display=(obj.display=='none')?'block':'none';">防御系<br></div>
+          <div id="defence" class="contents_text" style="display:none;clear:both;">
+          <span class ="abilityType"><input class="checkbox" type="checkbox" id="defenseUp" value="defenseUp"><label for="defenseUp">防御力</label></span>
+          <span class ="abilityType"><input class="checkbox" type="checkbox" id="damageCut" value="damageCut"><label for="damageCut">ダメージカット</label></span>
+          <span class ="abilityType"><input class="checkbox" type="checkbox" id="specialDefenseUp" value="specialDefenseUp"><label for="specialDefenseUp">特防状態を付与</label></span>
+          <span class ="abilityType"><input class="checkbox" type="checkbox" id="setGuts" value="setGuts"><label for="setGuts">ガッツ状態を付与</label></span>
+          <span class ="abilityType"><input class="checkbox" type="checkbox" id="invincible" value="invincible"><label for="invincible">回避・無敵</label></span>
+          <span class ="abilityType"><input class="checkbox" type="checkbox" id="resistDebuff" value="resistDebuff"><label for="resistDebuff">弱体耐性</label></span>
+          <span class ="abilityType"><input class="checkbox" type="checkbox" id="DebuffIgnore" value="DebuffIgnore"><label for="DebuffIgnore">弱体無効</label></span>
+          <span class ="abilityType"><input class="checkbox" type="checkbox" id="resistBuff" value="resistBuff"><label for="resistBuff">強化耐性</label></span>
+          <br>
+          </div>
+
+          <div class="headline01" onclick="obj=document.getElementById('hp').style; obj.display=(obj.display=='none')?'block':'none';">HP系<br></div>
+          <div id="hp" class="contents_text" style="display:none;clear:both;">
+          <span class ="abilityType"><input class="checkbox" type="checkbox" id="hpRegeneration" value="hpRegeneration"><label for="hpRegeneration">HP毎ターン回復</label></span>
+          <span class ="abilityType"><input class="checkbox" type="checkbox" id="healUp" value="healUp"><label for="healUp">HP回復量</label></span>
+          <span class ="abilityType"><input class="checkbox" type="checkbox" id="maxHpUp" value="maxHpUp"><label for="maxHpUp">HP最大値上昇</label></span>
+          <br>
+          </div>
+
+          <div class="headline01" onclick="obj=document.getElementById('np').style; obj.display=(obj.display=='none')?'block':'none';">NP系<br></div>
+          <div id="np" class="contents_text" style="display:none;clear:both;">
+          <span class ="abilityType"><input class="checkbox" type="checkbox" id="getNpCharge" value="getNpCharge"><label for="getNpCharge">NPチャージ</label></span>
+          <span class ="abilityType"><input class="checkbox" type="checkbox" id="getNpUp" value="getNpUp"><label for="getNpUp">NP獲得量</label></span>
+          <span class ="abilityType"><input class="checkbox" type="checkbox" id="npRegeneration" value="npRegeneration"><label for="npRegeneration">NP毎ターン獲得</label></span>
+          <br>
+          </div>
+
+          <div class="headline01" onclick="obj=document.getElementById('etc').style; obj.display=(obj.display=='none')?'block':'none';">その他<br></div>
+          <div id="etc" class="contents_text" style="display:none;clear:both;">
+          <span class ="abilityType"><input class="checkbox" type="checkbox" id="targetGatherUp" value="targetGatherUp"><label for="targetGatherUp">ターゲット集中状態を付与</label></span>
+          <span class ="abilityType"><input class="checkbox" type="checkbox" id="npChargeCountUp" value="npChargeCountUp"><label for="npChargeCountUp">宝具チャージ段階上昇</label></span>
+          <span class ="abilityType"><input class="checkbox" type="checkbox" id="exit" value="exit"><label for="exit">退場時</label></span>
+          <span class ="abilityType"><input class="checkbox" type="checkbox" id="rewardUp" value="rewardUp"><label for="rewardUp">報酬増加</label></span>
+          <span class ="abilityType"><input class="checkbox" type="checkbox" id="maxBond" value="maxBond"><label for="maxBond">絆礼装</label></span>
+          <span class ="abilityType"><input class="checkbox" type="checkbox" id="valentine" value="valentine"><label for="valentine">バレンタイン礼装</label></span>
+          </div>
+          <p>
+          <!-- デバッグの必要に応じて使用
+          <input type="button" value="送信する" onClick="chBxCheck();">
+          -->
+          </p>
+        </form>
       </div>
 
-      <div class="headline01" onclick="obj=document.getElementById('defence').style; obj.display=(obj.display=='none')?'block':'none';">防御系<br></div>
-      <div id="defence" class="contents_text" style="display:none;clear:both;">
-      <span class ="abilityType"><input class="checkbox" type="checkbox" id="defenseUp" value="defenseUp"><label for="defenseUp">防御力</label></span>
-      <span class ="abilityType"><input class="checkbox" type="checkbox" id="damageCut" value="damageCut"><label for="damageCut">ダメージカット</label></span>
-      <span class ="abilityType"><input class="checkbox" type="checkbox" id="specialDefenseUp" value="specialDefenseUp"><label for="specialDefenseUp">特防状態を付与</label></span>
-      <span class ="abilityType"><input class="checkbox" type="checkbox" id="setGuts" value="setGuts"><label for="setGuts">ガッツ状態を付与</label></span>
-      <span class ="abilityType"><input class="checkbox" type="checkbox" id="invincible" value="invincible"><label for="invincible">回避・無敵</label></span>
-      <span class ="abilityType"><input class="checkbox" type="checkbox" id="resistDebuff" value="resistDebuff"><label for="resistDebuff">弱体耐性</label></span>
-      <span class ="abilityType"><input class="checkbox" type="checkbox" id="DebuffIgnore" value="DebuffIgnore"><label for="DebuffIgnore">弱体無効</label></span>
-      <span class ="abilityType"><input class="checkbox" type="checkbox" id="resistBuff" value="resistBuff"><label for="resistBuff">強化耐性</label></span>
-      <br>
-      </div>
+      <div id="tabContent2">
+        <!--能力リスト（除外）-->
+        <form id="formIgnoreAbilityType">
+          <div class="headline02" onclick="obj=document.getElementById('attackIgnore').style; obj.display=(obj.display=='none')?'block':'none';">攻撃系【除外】<br></div>
+          <div id="attackIgnore" class="contents_text" style="display:none;clear:both;">
+          <span class ="abilityType"><input class="checkbox" type="checkbox" id="IgnoreAttackUp" value="attackUp"><label for="IgnoreAttackUp">攻撃力</label></span>
+          <span class ="abilityType"><input class="checkbox" type="checkbox" id="IgnoreNpDamageUp" value="npDamageUp"><label for="IgnoreNpDamageUp">宝具威力</label></span>
+          <span class ="abilityType"><input class="checkbox" type="checkbox" id="IgnoreDamageUp" value="damageUp"><label for="IgnoreDamageUp">ダメージプラス</label></span>
+          <span class ="abilityType"><input class="checkbox" type="checkbox" id="IgnoreSpecialAttackUp" value="specialAttackUp"><label for="IgnoreSpecialAttackUp">特攻状態を付与</label></span>
+          <span class ="abilityType"><input class="checkbox" type="checkbox" id="IgnoreBusterUp" value="busterUp"><label for="IgnoreBusterUp">Buster</label></span>
+          <span class ="abilityType"><input class="checkbox" type="checkbox" id="IgnoreQuickUp" value="quickUp"><label for="IgnoreQuickUp">Quick</label></span>
+          <span class ="abilityType"><input class="checkbox" type="checkbox" id="IgnoreArtsUp" value="artsUp"><label for="IgnoreArtsUp">Arts</label></span>
+          <span class ="abilityType"><input class="checkbox" type="checkbox" id="IgnoreCriticalDamageUp" value="criticalDamageUp"><label for="IgnoreCriticalDamageUp">クリティカル威力アップ</label></span>
+          <span class ="abilityType"><input class="checkbox" type="checkbox" id="IgnoreStarGenerationUp" value="starGenerationUp"><label for="IgnoreStarGenerationUp">スター発生率</label></span>
+          <span class ="abilityType"><input class="checkbox" type="checkbox" id="IgnoreStarGatherUp" value="starGatherUp"><label for="IgnoreStarGatherUp">スター集中</label></span>
+          <span class ="abilityType"><input class="checkbox" type="checkbox" id="IgnoreGetStar" value="getStar"><label for="IgnoreGetStar">毎ターンスター獲得</label></span>
+          <span class ="abilityType"><input class="checkbox" type="checkbox" id="IgnoreInvincibleIgnore" value="invincibleIgnore"><label for="IgnoreInvincibleIgnore">必中・無敵貫通</label></span>
+          <span class ="abilityType"><input class="checkbox" type="checkbox" id="IgnoreSetDebuff" value="setDebuff"><label for="IgnoreSetDebuff">弱体付与</label></span>
+          <span class ="abilityType"><input class="checkbox" type="checkbox" id="IgnoreDefenseIgnore" value="defenseIgnore"><label for="IgnoreDefenseIgnore">防御無視</label></span>
+          <br>
+          </div>
 
-      <div class="headline01" onclick="obj=document.getElementById('hp').style; obj.display=(obj.display=='none')?'block':'none';">HP系<br></div>
-      <div id="hp" class="contents_text" style="display:none;clear:both;">
-      <span class ="abilityType"><input class="checkbox" type="checkbox" id="hpRegeneration" value="hpRegeneration"><label for="hpRegeneration">HP毎ターン回復</label></span>
-      <span class ="abilityType"><input class="checkbox" type="checkbox" id="healUp" value="healUp"><label for="healUp">HP回復量</label></span>
-      <span class ="abilityType"><input class="checkbox" type="checkbox" id="maxHpUp" value="maxHpUp"><label for="maxHpUp">HP最大値上昇</label></span>
-      <br>
-      </div>
+          <div class="headline02" onclick="obj=document.getElementById('defenceIgnore').style; obj.display=(obj.display=='none')?'block':'none';">防御系【除外】<br></div>
+          <div id="defenceIgnore" class="contents_text" style="display:none;clear:both;">
+          <span class ="abilityType"><input class="checkbox" type="checkbox" id="IgnoreDefenseUp" value="defenseUp"><label for="IgnoreDefenseUp">防御力</label></span>
+          <span class ="abilityType"><input class="checkbox" type="checkbox" id="IgnoreDamageCut" value="damageCut"><label for="IgnoreDamageCut">ダメージカット</label></span>
+          <span class ="abilityType"><input class="checkbox" type="checkbox" id="IgnoreSpecialDefenseUp" value="specialDefenseUp"><label for="IgnoreSpecialDefenseUp">特防状態を付与</label></span>
+          <span class ="abilityType"><input class="checkbox" type="checkbox" id="IgnoreSetGuts" value="setGuts"><label for="IgnoreSetGuts">ガッツ状態を付与</label></span>
+          <span class ="abilityType"><input class="checkbox" type="checkbox" id="IgnoreInvincible" value="invincible"><label for="IgnoreInvincible">回避・無敵</label></span>
+          <span class ="abilityType"><input class="checkbox" type="checkbox" id="IgnoreResistDebuff" value="resistDebuff"><label for="IgnoreResistDebuff">弱体耐性</label></span>
+          <span class ="abilityType"><input class="checkbox" type="checkbox" id="IgnoreDebuffIgnore" value="DebuffIgnore"><label for="IgnoreDebuffIgnore">弱体無効</label></span>
+          <span class ="abilityType"><input class="checkbox" type="checkbox" id="IgnoreResistBuff" value="resistBuff"><label for="IgnoreResistBuff">強化耐性</label></span>
+          <br>
+          </div>
 
-      <div class="headline01" onclick="obj=document.getElementById('np').style; obj.display=(obj.display=='none')?'block':'none';">NP系<br></div>
-      <div id="np" class="contents_text" style="display:none;clear:both;">
-      <span class ="abilityType"><input class="checkbox" type="checkbox" id="getNpCharge" value="getNpCharge"><label for="getNpCharge">NPチャージ</label></span>
-      <span class ="abilityType"><input class="checkbox" type="checkbox" id="getNpUp" value="getNpUp"><label for="getNpUp">NP獲得量</label></span>
-      <span class ="abilityType"><input class="checkbox" type="checkbox" id="npRegeneration" value="npRegeneration"><label for="npRegeneration">NP毎ターン獲得</label></span>
-      <br>
-      </div>
+          <div class="headline02" onclick="obj=document.getElementById('hpIgnore').style; obj.display=(obj.display=='none')?'block':'none';">HP系【除外】<br></div>
+          <div id="hpIgnore" class="contents_text" style="display:none;clear:both;">
+          <span class ="abilityType"><input class="checkbox" type="checkbox" id="IgnoreHpRegeneration" value="hpRegeneration"><label for="IgnoreHpRegeneration">HP毎ターン回復</label></span>
+          <span class ="abilityType"><input class="checkbox" type="checkbox" id="IgnoreHealUp" value="healUp"><label for="IgnoreHealUp">HP回復量</label></span>
+          <span class ="abilityType"><input class="checkbox" type="checkbox" id="IgnoreMaxHpUp" value="maxHpUp"><label for="IgnoreMaxHpUp">HP最大値上昇</label></span>
+          <br>
+          </div>
 
-      <div class="headline01" onclick="obj=document.getElementById('etc').style; obj.display=(obj.display=='none')?'block':'none';">その他<br></div>
-      <div id="etc" class="contents_text" style="display:none;clear:both;">
-      <span class ="abilityType"><input class="checkbox" type="checkbox" id="targetGatherUp" value="targetGatherUp"><label for="targetGatherUp">ターゲット集中状態を付与</label></span>
-      <span class ="abilityType"><input class="checkbox" type="checkbox" id="npChargeCountUp" value="npChargeCountUp"><label for="npChargeCountUp">宝具チャージ段階上昇</label></span>
-      <span class ="abilityType"><input class="checkbox" type="checkbox" id="exit" value="exit"><label for="exit">退場時</label></span>
-      <span class ="abilityType"><input class="checkbox" type="checkbox" id="rewardUp" value="rewardUp"><label for="rewardUp">報酬増加</label></span>
-      <span class ="abilityType"><input class="checkbox" type="checkbox" id="maxBond" value="maxBond"><label for="maxBond">絆礼装</label></span>
-      <span class ="abilityType"><input class="checkbox" type="checkbox" id="valentine" value="valentine"><label for="valentine">バレンタイン礼装</label></span>
-      </div>
-      <p>
-      <!-- デバッグの必要に応じて使用
-      <input type="button" value="送信する" onClick="chBxCheck();">
-      -->
-      </p>
-    </form>
+          <div class="headline02" onclick="obj=document.getElementById('npIgnore').style; obj.display=(obj.display=='none')?'block':'none';">NP系【除外】<br></div>
+          <div id="npIgnore" class="contents_text" style="display:none;clear:both;">
+          <span class ="abilityType"><input class="checkbox" type="checkbox" id="IgnoreGetNpCharge" value="getNpCharge"><label for="IgnoreGetNpCharge">NPチャージ</label></span>
+          <span class ="abilityType"><input class="checkbox" type="checkbox" id="IgnoreGetNpUp" value="getNpUp"><label for="IgnoreGetNpUp">NP獲得量</label></span>
+          <span class ="abilityType"><input class="checkbox" type="checkbox" id="IgnoreNpRegeneration" value="npRegeneration"><label for="IgnoreNpRegeneration">NP毎ターン獲得</label></span>
+          <br>
+          </div>
 
-    <!--能力リスト（除外）-->
-    <form id="formIgnoreAbilityType">
-      <div class="headline02" onclick="obj=document.getElementById('attackIgnore').style; obj.display=(obj.display=='none')?'block':'none';">攻撃系（除外）<br></div>
-      <div id="attackIgnore" class="contents_text" style="display:none;clear:both;">
-      <span class ="abilityType"><input class="checkbox" type="checkbox" id="attackUp" value="attackUp"><label for="attackUp">攻撃力</label></span>
-      <span class ="abilityType"><input class="checkbox" type="checkbox" id="npDamageUp" value="npDamageUp"><label for="npDamageUp">宝具威力</label></span>
-      <span class ="abilityType"><input class="checkbox" type="checkbox" id="damageUp" value="damageUp"><label for="damageUp">ダメージプラス</label></span>
-      <span class ="abilityType"><input class="checkbox" type="checkbox" id="specialAttackUp" value="specialAttackUp"><label for="specialAttackUp">特攻状態を付与</label></span>
-      <span class ="abilityType"><input class="checkbox" type="checkbox" id="busterUp" value="busterUp"><label for="busterUp">Buster</label></span>
-      <span class ="abilityType"><input class="checkbox" type="checkbox" id="quickUp" value="quickUp"><label for="quickUp">Quick</label></span>
-      <span class ="abilityType"><input class="checkbox" type="checkbox" id="artsUp" value="artsUp"><label for="artsUp">Arts</label></span>
-      <span class ="abilityType"><input class="checkbox" type="checkbox" id="criticalDamageUp" value="criticalDamageUp"><label for="criticalDamageUp">クリティカル威力アップ</label></span>
-      <span class ="abilityType"><input class="checkbox" type="checkbox" id="starGenerationUp" value="starGenerationUp"><label for="starGenerationUp">スター発生率</label></span>
-      <span class ="abilityType"><input class="checkbox" type="checkbox" id="starGatherUp" value="starGatherUp"><label for="starGatherUp">スター集中</label></span>
-      <span class ="abilityType"><input class="checkbox" type="checkbox" id="getStar" value="getStar"><label for="getStar">毎ターンスター獲得</label></span>
-      <span class ="abilityType"><input class="checkbox" type="checkbox" id="invincibleIgnore" value="invincibleIgnore"><label for="invincibleIgnore">必中・無敵貫通</label></span>
-      <span class ="abilityType"><input class="checkbox" type="checkbox" id="setDebuff" value="setDebuff"><label for="setDebuff">弱体付与</label></span>
-      <span class ="abilityType"><input class="checkbox" type="checkbox" id="defenseIgnore" value="defenseIgnore"><label for="defenseIgnore">防御無視</label></span>
-      <br>
+          <div class="headline02" onclick="obj=document.getElementById('etcIgnore').style; obj.display=(obj.display=='none')?'block':'none';">その他【除外】<br></div>
+          <div id="etcIgnore" class="contents_text" style="display:none;clear:both;">
+          <span class ="abilityType"><input class="checkbox" type="checkbox" id="IgnoreTargetGatherUp" value="targetGatherUp"><label for="IgnoreTargetGatherUp">ターゲット集中状態を付与</label></span>
+          <span class ="abilityType"><input class="checkbox" type="checkbox" id="IgnoreNpChargeCountUp" value="npChargeCountUp"><label for="IgnoreNpChargeCountUp">宝具チャージ段階上昇</label></span>
+          <span class ="abilityType"><input class="checkbox" type="checkbox" id="IgnoreExit" value="exit"><label for="IgnoreExit">退場時</label></span>
+          <span class ="abilityType"><input class="checkbox" type="checkbox" id="IgnoreRewardUp" value="rewardUp"><label for="IgnoreRewardUp">報酬増加</label></span>
+          <span class ="abilityType"><input class="checkbox" type="checkbox" id="IgnoreMaxBond" value="maxBond"><label for="IgnoreMaxBond">絆礼装</label></span>
+          <span class ="abilityType"><input class="checkbox" type="checkbox" id="IgnoreValentine" value="valentine"><label for="IgnoreValentine">バレンタイン礼装</label></span>
+          </div>
+          <p>
+          <!-- デバッグの必要に応じて使用
+          <input type="button" value="送信する" onClick="chBxCheck();">
+          -->
+          </p>
+        </form>
       </div>
-
-      <div class="headline02" onclick="obj=document.getElementById('defenceIgnore').style; obj.display=(obj.display=='none')?'block':'none';">防御系（除外）<br></div>
-      <div id="defenceIgnore" class="contents_text" style="display:none;clear:both;">
-      <span class ="abilityType"><input class="checkbox" type="checkbox" id="defenseUp" value="defenseUp"><label for="defenseUp">防御力</label></span>
-      <span class ="abilityType"><input class="checkbox" type="checkbox" id="damageCut" value="damageCut"><label for="damageCut">ダメージカット</label></span>
-      <span class ="abilityType"><input class="checkbox" type="checkbox" id="specialDefenseUp" value="specialDefenseUp"><label for="specialDefenseUp">特防状態を付与</label></span>
-      <span class ="abilityType"><input class="checkbox" type="checkbox" id="setGuts" value="setGuts"><label for="setGuts">ガッツ状態を付与</label></span>
-      <span class ="abilityType"><input class="checkbox" type="checkbox" id="invincible" value="invincible"><label for="invincible">回避・無敵</label></span>
-      <span class ="abilityType"><input class="checkbox" type="checkbox" id="resistDebuff" value="resistDebuff"><label for="resistDebuff">弱体耐性</label></span>
-      <span class ="abilityType"><input class="checkbox" type="checkbox" id="DebuffIgnore" value="DebuffIgnore"><label for="DebuffIgnore">弱体無効</label></span>
-      <span class ="abilityType"><input class="checkbox" type="checkbox" id="resistBuff" value="resistBuff"><label for="resistBuff">強化耐性</label></span>
-      <br>
-      </div>
-
-      <div class="headline02" onclick="obj=document.getElementById('hpIgnore').style; obj.display=(obj.display=='none')?'block':'none';">HP系（除外）<br></div>
-      <div id="hpIgnore" class="contents_text" style="display:none;clear:both;">
-      <span class ="abilityType"><input class="checkbox" type="checkbox" id="hpRegeneration" value="hpRegeneration"><label for="hpRegeneration">HP毎ターン回復</label></span>
-      <span class ="abilityType"><input class="checkbox" type="checkbox" id="healUp" value="healUp"><label for="healUp">HP回復量</label></span>
-      <span class ="abilityType"><input class="checkbox" type="checkbox" id="maxHpUp" value="maxHpUp"><label for="maxHpUp">HP最大値上昇</label></span>
-      <br>
-      </div>
-
-      <div class="headline02" onclick="obj=document.getElementById('npIgnore').style; obj.display=(obj.display=='none')?'block':'none';">NP系（除外）<br></div>
-      <div id="npIgnore" class="contents_text" style="display:none;clear:both;">
-      <span class ="abilityType"><input class="checkbox" type="checkbox" id="getNpCharge" value="getNpCharge"><label for="getNpCharge">NPチャージ</label></span>
-      <span class ="abilityType"><input class="checkbox" type="checkbox" id="getNpUp" value="getNpUp"><label for="getNpUp">NP獲得量</label></span>
-      <span class ="abilityType"><input class="checkbox" type="checkbox" id="npRegeneration" value="npRegeneration"><label for="npRegeneration">NP毎ターン獲得</label></span>
-      <br>
-      </div>
-
-      <div class="headline02" onclick="obj=document.getElementById('etcIgnore').style; obj.display=(obj.display=='none')?'block':'none';">その他（除外）<br></div>
-      <div id="etcIgnore" class="contents_text" style="display:none;clear:both;">
-      <span class ="abilityType"><input class="checkbox" type="checkbox" id="targetGatherUp" value="targetGatherUp"><label for="targetGatherUp">ターゲット集中状態を付与</label></span>
-      <span class ="abilityType"><input class="checkbox" type="checkbox" id="npChargeCountUp" value="npChargeCountUp"><label for="npChargeCountUp">宝具チャージ段階上昇</label></span>
-      <span class ="abilityType"><input class="checkbox" type="checkbox" id="exit" value="exit"><label for="exit">退場時</label></span>
-      <span class ="abilityType"><input class="checkbox" type="checkbox" id="rewardUp" value="rewardUp"><label for="rewardUp">報酬増加</label></span>
-      <span class ="abilityType"><input class="checkbox" type="checkbox" id="maxBond" value="maxBond"><label for="maxBond">絆礼装</label></span>
-      <span class ="abilityType"><input class="checkbox" type="checkbox" id="valentine" value="valentine"><label for="valentine">バレンタイン礼装</label></span>
-      </div>
-      <p>
-      <!-- デバッグの必要に応じて使用
-      <input type="button" value="送信する" onClick="chBxCheck();">
-      -->
-      </p>
-    </form>
+      <!-- <div id="tabContent3">
+        タブラベル３がクリックされました。<br>
+        タブラベル３のコンテンツです。</div> -->
+    </div>
+  </div>
 
   <hr>
   <div class="headline00">選択中の能力</div>
