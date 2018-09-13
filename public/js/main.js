@@ -25,6 +25,7 @@ var cpList = parseCSV2("/csv/cpList.csv");
 var logList = [];
 
 var checkListLast = [];
+var ignoreCheckListLast = [];
 var searchWordLast = "";
 var searchTypeLast;
 var sortTypeLast = [];
@@ -91,35 +92,49 @@ function createTag(checkList){
     var msg = "";
     var checkList = checkList;
 
-    console.log("checkList:"+ checkList);
-
-      for(var i=0; i<checkList.length;i++){
-        // console.log("abilityTypeList => ", abilityTypeList);
-        for(var ii=0; ii<abilityTypeList.length;ii++){
-          if(abilityTypeList[ii][2] == checkList[i]){
-            msg = msg + "<span class='choiceAbilityType'>" + abilityTypeList[ii][1] + "</span>";
-            break;
-          }
+    for(var i=0; i<checkList.length;i++){
+      // console.log("abilityTypeList => ", abilityTypeList);
+      for(var ii=0; ii<abilityTypeList.length;ii++){
+        if(abilityTypeList[ii][2] == checkList[i]){
+          msg += "<span class='choiceAbilityType'>" + abilityTypeList[ii][1] + "</span>";
+          break;
         }
       }
-      if(msg == ""){
-       msg = "<div class='contents_text'>選択されている能力がありません。</div>"
-      }
-      return msg;
+    }
+    if(msg == ""){
+      msg = "<div class='contents_text'>選択されている能力がありません。</div>"
+    }
+    return msg;
 }
 
 // 選択しているチェックボックスを取得
 function convertChbx(){
     var flag = false;
     var checkList = new Array();
-    for(var i=0; i<document.getElementById("formAbilityType").elements.length;i++){
-        if(document.getElementById("formAbilityType").elements[i].checked){
+    var formAbilityType = document.getElementById("formAbilityType").elements;
+    for(var i=0; i<formAbilityType.length;i++){
+        if(formAbilityType[i].checked){
 	    flag = true;
-          checkList.push(document.getElementById("formAbilityType").elements[i].value);
+          checkList.push(formAbilityType[i].value);
         }
     }
 
     return checkList;
+}
+
+// 選択しているチェックボックスを取得(排除リスト)
+function convertIgnoreChbx(){
+    var flag = false;
+    var ignoreCheckList = new Array();
+    var formIgnoreAbilityType = document.getElementById("formIgnoreAbilityType").elements;
+    for(var i=0; i<formIgnoreAbilityType.length;i++){
+      if(formIgnoreAbilityType[i].checked){
+        flag = true;
+        ignoreCheckList.push(formIgnoreAbilityType[i].value);
+      }
+    }
+
+    return ignoreCheckList;
 }
 
 // 検索文字列の取得
@@ -161,7 +176,7 @@ function getSortType(){
 *////////////////////////////////////////////////////////
 
 // 該当する概念礼装の一覧表示（or検索）
-function chBxCheckOr(checkList,searchWord,sortType){
+function chBxCheckOr(checkList,ignoreCheckList,searchWord,sortType){
     var checkList = checkList;
 
     if(!checkList){
@@ -210,18 +225,30 @@ function chBxCheckOr(checkList,searchWord,sortType){
 
 
 // 該当する概念礼装の一覧表示（and検索）
-function chBxCheckAnd(checkList,searchWord,sortType){
+function chBxCheckAnd(checkList,ignoreCheckList,searchWord,sortType){
     var checkList = checkList;
 
     if(!checkList){
         alert("項目が選択されていません。");
     }
+    console.log("checkList: " + checkList);
+    console.log("ignoreCheckList: " + ignoreCheckList);
 
-    // 数値に変換
+    // checkListを数値に変換
     for(var i=0; i<checkList.length;i++){
       for(var ii=0; ii<abilityTypeList.length;ii++){
         if(abilityTypeList[ii][2] == checkList[i]){
           checkList[i] = abilityTypeList[ii][0];
+          break;
+        }
+      }
+    }
+
+    // ignoreCheckListを数値に変換
+    for(var i=0; i<ignoreCheckList.length;i++){
+      for(var ii=0; ii<abilityTypeList.length;ii++){
+        if(abilityTypeList[ii][2] == ignoreCheckList[i]){
+          ignoreCheckList[i] = abilityTypeList[ii][0];
           break;
         }
       }
@@ -238,6 +265,14 @@ function chBxCheckAnd(checkList,searchWord,sortType){
         if(cpList[i][Number(checkList[ii]) + startNumberAbilityType] == "○"){
           orCheck = true;
         }else{
+          orCheck = false;
+          break;
+        }
+      }
+
+      // 能力検索（除外）
+      for(var ii=0; ii<ignoreCheckList.length;ii++){
+        if(cpList[i][Number(ignoreCheckList[ii]) + startNumberAbilityType] == "○"){
           orCheck = false;
           break;
         }
@@ -480,6 +515,7 @@ function setChbxLog(checkList,checkListLast){
 function update(){
   // 最終更新とチェックリストを比較して変化してるかチェック
   var checkList = convertChbx();
+  var ignoreCheckList = convertIgnoreChbx();
   var searchWord = getSearchWord();
   var searchType = getSearchType();
   var sortType = getSortType();
@@ -487,10 +523,13 @@ function update(){
   var checkUpdateChbx = false;
   checkUpdateChbx = !(checkList.toString() == checkListLast.toString());
 
+  var checkUpdateIgnoreChbx = false;
+  checkUpdateIgnoreChbx = !(ignoreCheckList.toString() == ignoreCheckListLast.toString());
+
   // チェックボックに変化があったらDBに記録処理
-  if (checkUpdateChbx) {
-    setChbxLog(checkList,checkListLast);
-  }
+  // if (checkUpdateChbx) {
+  //   setChbxLog(checkList,checkListLast);
+  // }
 
   var checkUpdateWord = false;
   checkUpdateWord = !(searchWord == searchWordLast);
@@ -501,12 +540,18 @@ function update(){
   var checkSortType = false;
   checkSortType = !(sortType.toString() == sortTypeLast.toString());
 
-  if(checkUpdateChbx || checkUpdateWord || checkSearchType || checkSortType){
+  if(checkUpdateChbx || checkUpdateIgnoreChbx || checkUpdateWord || checkSearchType || checkSortType){
 
     // チェックリストの状態を保存（最終入力との比較用）
     checkListLast = [];
     for (var i = 0, len = checkList.length; i < len; i++) {
       checkListLast.push(checkList[i]);
+    }
+
+    // チェックリスト(除外)の状態を保存（最終入力との比較用）
+    IgnoreCheckListLast = [];
+    for (var i = 0, len = ignoreCheckList.length; i < len; i++) {
+      ignoreCheckListLast.push(ignoreCheckList[i]);
     }
 
     // 入力された文字列を保存（最終入力との比較用）
@@ -523,9 +568,9 @@ function update(){
 
     // 能力から概念礼装を検索して描画する処理
     if(document.getElementById("and").checked){
-      chBxCheckAnd(checkList,searchWord,sortType);
+      chBxCheckAnd(checkList,ignoreCheckList,searchWord,sortType);
     }else{
-      chBxCheckOr(checkList,searchWord,sortType);
+      chBxCheckOr(checkList,ignoreCheckList,searchWord,sortType);
     }
     console.log("更新したよ");
   }

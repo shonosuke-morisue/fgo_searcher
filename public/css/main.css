@@ -49,6 +49,17 @@ div.headline01{
   margin: 2px 2px 2px 2px; /* 上右下左 */
 }
 
+/* abilityType（除外） */
+div.headline02{
+  background-color: #CEE;
+  border: 1px solid #111;
+  border-radius: 10px;        /* CSS3草案 */
+  -webkit-border-radius: 10px;    /* Safari,Google Chrome用 */
+  -moz-border-radius: 10px;   /* Firefox用 */
+  padding: 2px 2px 2px 10px; /* 上右下左 */
+  margin: 2px 2px 2px 2px; /* 上右下左 */
+}
+
 .contents_text{
   padding: 2px 10px 2px 10px; /* 上右下左 */
   color: 	#111;
