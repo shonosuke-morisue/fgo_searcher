@@ -64,11 +64,15 @@ function chBxOff(){
   document.getElementById("searchWord").value = "";
   for(i=0; i<abilityTypeList.length; i++) {
     document.getElementById("formAbilityType").elements[abilityTypeList[i][2]].checked = false;
-    document.getElementById("formIgnoreAbilityType").elements[abilityTypeList[i][2]].checked = false;
+    document.getElementById("formIgnoreAbilityType").elements[abilityTypeList[i][3]].checked = false;
+    document.getElementById("container").innerHTML = "<div class='contents_text'>選択されている能力がありません。</div>";
     document.getElementById("container02").innerHTML = "<div class='contents_text'>該当する概念礼装がありません。</div>";
     console.log("カウント：" + [i]);
   }
-    console.log("チェックボックス外しオワタ");
+  searchWordLast = "";
+  checkListLast = [];
+  ignoreCheckListLast = [];
+  console.log("チェックボックス外し/検索文字消去オワタ");
 }
 
 // 全てのチェックボックのチェックする
@@ -205,14 +209,35 @@ function chBxCheckOr(checkList,ignoreCheckList,searchWord,sortType){
       }
     }
 
+    // ignoreCheckListを数値に変換
+    for(var i=0; i<ignoreCheckList.length;i++){
+      for(var ii=0; ii<abilityTypeList.length;ii++){
+        if(abilityTypeList[ii][2] == ignoreCheckList[i]){
+          ignoreCheckList[i] = abilityTypeList[ii][0];
+          break;
+        }
+      }
+    }
+    console.log("checkList（or）: " + checkList);
+    console.log("ignoreCheckList（or）: " + ignoreCheckList);
+
     var choiceList = [];
     // 該当する概念礼装の情報を整形してmsgに入れる
     var msg = "";
     for(var i=0; i<cpList.length;i++){
+      
+      let ignoreCheck = true;
+      for(var ii=0; ii<ignoreCheckList.length;ii++){
+        if(cpList[i][Number(ignoreCheckList[ii]) + startNumberAbilityType] == "○"){
+          ignoreCheck = false;
+          break;
+        }
+      }
+
       for(var ii=0; ii<checkList.length;ii++){
 
         // 能力検索
-        if(cpList[i][Number(checkList[ii]) + startNumberAbilityType] == "○"){
+        if(cpList[i][Number(checkList[ii]) + startNumberAbilityType] == "○" && ignoreCheck){
           msg = createMsg(msg,cpList,i);
           choiceList = setChoiceList(cpList,choiceList,msg,i);
           break;
@@ -222,7 +247,7 @@ function chBxCheckOr(checkList,ignoreCheckList,searchWord,sortType){
       // 礼装名検索
       if(!(searchWord == "")){
         let wordCheck = wordSearch(searchWord,i);
-        if (wordCheck) {
+        if (wordCheck && ignoreCheck) {
           msg = createMsg(msg,cpList,i);
           choiceList = setChoiceList(cpList,choiceList,msg,i);
         }
@@ -556,13 +581,13 @@ function update(){
 
     // チェックリストの状態を保存（最終入力との比較用）
     checkListLast = [];
-    for (var i = 0, len = checkList.length; i < len; i++) {
+    for (var i = 0; i < checkList.length; i++) {
       checkListLast.push(checkList[i]);
     }
 
     // チェックリスト(除外)の状態を保存（最終入力との比較用）
-    IgnoreCheckListLast = [];
-    for (var i = 0, len = ignoreCheckList.length; i < len; i++) {
+    ignoreCheckListLast = [];
+    for (var i = 0; i < ignoreCheckList.length; i++) {
       ignoreCheckListLast.push(ignoreCheckList[i]);
     }
 
