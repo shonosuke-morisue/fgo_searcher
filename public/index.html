@@ -61,7 +61,7 @@
   FGOの概念礼装検索サービスです。<br>検索したい能力や条件にチェックを入れると、下のほうに条件に合致する礼装の情報が表示されます。<br>
 
   <div class="announce">
-    ※イベント「バトル・イン・ニューヨーク」で追加された礼装情報を追加。（画像未対応です）<br>
+    ※イベント「バトル・イン・ニューヨーク」で追加された礼装を追加。<br>
     ※or検索で除外設定が効いてなかったのを修正しました。<br>
   </div>
   <div id="announceArea" onclick="switchAnnounceArea();" style="text-align:right;">and more...▼</div>
@@ -83,6 +83,10 @@
     ・英霊肖像、英霊旅装、同人礼装、などなど他にもあるかも
     ・イベント特効礼装
     ・能力の効果量ソート（能力をひとつだけ選択した時、限定ならできるかも）
+    ・礼装個別のページを作る
+    　→シェアボタン
+    　→掲示板
+    　　三国志曹操伝を参考にNG多いと表示しないとか？
     ・チェックされてる能力のデータ集計
 
     ■対応済み
@@ -134,14 +138,14 @@
   <div class="contents">
     <input type="radio" id="tab_label1" name="tab" checked>
     <label for="tab_label1">能力選択</label>
-    
+
     <input type="radio" id="tab_label2" name="tab">
     <label for="tab_label2">能力除外</label>
     <!-- <input type="radio" id="tab_label3" name="tab">
     <label for="tab_label3">タブラベル３</label> -->
-    
+
     <div class="tab_box">
-      <div id="tabContent1">	
+      <div id="tabContent1">
         <!--能力リスト-->
         <form id="formAbilityType">
           <div class="headline01" onclick="obj=document.getElementById('attack').style; obj.display=(obj.display=='none')?'block':'none';">攻撃系<br></div>
